@@ -1,17 +1,5 @@
 @import '../styles/header.scss';
 
-html,
-body {
-    background: #000;
-}
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-
 $black-main: #000000;
 $black-soft: #0a0a0a;
 $white-main: #f4f1f5;
@@ -30,6 +18,96 @@ $overlay-light: rgba(0, 0, 0, 0.3);
 $border-light: rgba(255, 255, 255, 0.24);
 $inter: inter;
 $RussoOne: russoone;
+
+// Миксины
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin glass-effect($opacity: 0.1) {
+    background: rgba(255, 255, 255, $opacity);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@mixin gradient-text {
+    color: transparent;
+    background: linear-gradient(90deg,
+            #00d4ff,
+            /* яркий бирюзово-голубой (как кубы слева) */
+            #00f0ff,
+            /* чистый циан */
+            #0099ff,
+            /* глубокий голубой */
+            #a020ff,
+            /* переход в фиолетовый */
+            #ff00cc,
+            /* яркий магента/розово-пурпурный */
+            #ff0088
+            /* насыщенный розово-фиолетовый (как правые элементы) */
+        );
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+@mixin gradient-bg {
+    background: linear-gradient(90deg,
+            #00d4ff,
+            /* яркий бирюзово-голубой (как кубы слева) */
+            #00f0ff,
+            /* чистый циан */
+            #0099ff,
+            /* глубокий голубой */
+            #a020ff,
+            /* переход в фиолетовый */
+            #ff00cc,
+            /* яркий магента/розово-пурпурный */
+            #ff0088);
+    background-size: 300% 100%;
+}
+
+// html,
+// body {
+//     background: #000;
+//     scroll-behavior: smooth;
+// }
+
+// *,
+// *::before,
+// *::after {
+//     box-sizing: border-box;
+//     margin: 0;
+//     padding: 0;
+// }
+
+// Базовые стили
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: $dark;
+    overflow-x: hidden;
+}
+
+body.no-scroll {
+    overflow: hidden;
+    height: 100vh;
+}
 
 @font-face {
     font-family: inter;
