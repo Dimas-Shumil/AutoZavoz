@@ -11,10 +11,23 @@ body {
     padding: 0;
 }
 
-$white: #ffffffe8;
-$black: #000000;
-$red: #ff0000cc;
-$grey: #808080;
+
+$black-main: #000000;
+$black-soft: #0a0a0a;
+$white-main: #f4f1f5;
+$white-soft: rgba(255, 255, 255, 0.82);
+// ОРАНЖЕВЫЕ (главные)
+$orange-main: #ff6a00;
+$orange-light: #ff9b3d;
+$orange-dark: #ff5a00;
+// прозрачные версии
+$orange-glow: rgba(255, 106, 0, 0.3);
+$orange-soft: rgba(255, 132, 0, 0.15);
+// затемнение
+$overlay-dark: rgba(0, 0, 0, 0.7);
+$overlay-light: rgba(0, 0, 0, 0.3);
+// границы
+$border-light: rgba(255, 255, 255, 0.24);
 $inter: inter;
 $RussoOne: russoone;
 
@@ -31,4 +44,269 @@ $RussoOne: russoone;
 @font-face {
     font-family: russoone;
     src: url(../fonts/RussoOne-Regular.ttf);
+}
+
+.hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 140px 20px 80px;
+    background: $black-soft;
+
+    &__video {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+        filter: brightness(0.42) saturate(1.05);
+    }
+
+    &__overlay {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        background:
+            radial-gradient(circle at 50% 35%, rgba(255, 128, 0, 0.18), transparent 40%),
+            linear-gradient(180deg,
+                rgba(0, 0, 0, 0.15) 0%,
+                rgba(0, 0, 0, 0.1) 50%)
+    }
+
+    &__content {
+        position: relative;
+        z-index: 2;
+        width: 100%;
+        max-width: 1280px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    &__badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 36px;
+        padding: 8px 18px;
+        margin-bottom: 26px;
+        border: 1px solid rgba(255, 132, 0, 0.28);
+        border-radius: 999px;
+        background: rgba(255, 132, 0, 0.08);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 0 20px rgba(255, 115, 0, 0.08);
+
+        span {
+            font-family: $inter;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            color: #ff9b3dfd;
+        }
+    }
+
+    &__title {
+        margin: 0;
+        max-width: 980px;
+        font-family: $RussoOne;
+        font-size: clamp(42px, 7vw, 110px);
+        line-height: 0.95;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: $white-main;
+        text-align: center;
+        text-shadow:
+            0 4px 20px rgba(0, 0, 0, 0.35),
+            0 0 40px rgba(255, 255, 255, 0.04);
+
+        span {
+            display: inline-block;
+            margin-top: 10px;
+            background: linear-gradient(180deg, #ffb067 0%, #ff7a00 45%, #ff5a00 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+            filter: drop-shadow(0 0 22px rgba(255, 106, 0, 0.24));
+        }
+    }
+
+    &__subtitle {
+        margin: 28px 0 0;
+        max-width: 760px;
+        font-family: $inter;
+        font-size: clamp(16px, 1.5vw, 20px);
+        line-height: 1.6;
+        color: $white-soft;
+        text-align: center;
+    }
+
+    &__actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-top: 38px;
+    }
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 220px;
+    min-height: 58px;
+    padding: 0 28px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-family: $RussoOne;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    will-change: transform;
+
+    &:hover {
+        transform: translateY(-3px);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+
+    &--primary {
+        color: $white-main;
+        background: linear-gradient(180deg, #ff9b3dcb 0%, #ff6a00 100%);
+        box-shadow:
+            0 10px 30px rgba(255, 106, 0, 0.28),
+            inset 0 1px 0 rgba(255, 255, 255, 0.18);
+
+        &:hover {
+            box-shadow:
+                0 16px 36px rgba(255, 106, 0, 0.36),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+    }
+
+    &--secondary {
+        color: $white-main;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid $border-light;
+        backdrop-filter: blur(8px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 132, 0, 0.45);
+            color: $orange-light;
+        }
+    }
+}
+
+@media (max-width: 992px) {
+    .hero {
+        min-height: 92vh;
+        padding: 130px 20px 70px;
+
+        &__badge {
+            margin-bottom: 22px;
+        }
+
+        &__subtitle {
+            max-width: 680px;
+            margin-top: 24px;
+        }
+
+        &__actions {
+            margin-top: 32px;
+        }
+    }
+
+    .btn {
+        min-width: 205px;
+        min-height: 54px;
+        padding: 0 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        min-height: 100vh;
+        padding: 120px 16px 60px;
+
+        &__video {
+            object-position: center;
+        }
+
+        &__badge {
+            min-height: 34px;
+            padding: 7px 16px;
+            margin-bottom: 18px;
+
+            span {
+                font-size: 12px;
+            }
+        }
+
+        &__title {
+            line-height: 0.98;
+
+            span {
+                margin-top: 6px;
+            }
+        }
+
+        &__subtitle {
+            margin-top: 20px;
+            font-size: 15px;
+            line-height: 1.55;
+        }
+
+        &__actions {
+            flex-direction: column;
+            width: 100%;
+            gap: 14px;
+            margin-top: 28px;
+        }
+    }
+
+    .btn {
+        width: 100%;
+        max-width: 320px;
+        min-width: unset;
+        min-height: 52px;
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero {
+        padding: 110px 14px 50px;
+
+        &__overlay {
+            background:
+                radial-gradient(circle at 50% 30%, rgba(255, 128, 0, 0.1), transparent 34%),
+                linear-gradient(180deg, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.78) 48%, rgba(0, 0, 0, 0.9) 100%);
+        }
+
+        &__badge {
+            margin-bottom: 16px;
+        }
+
+        &__subtitle {
+            max-width: 100%;
+            font-size: 14px;
+        }
+    }
+
+    .btn {
+        max-width: 100%;
+        border-radius: 10px;
+    }
 }

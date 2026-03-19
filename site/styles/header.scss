@@ -1,4 +1,8 @@
-$white: #ffffffe8;
+$white-main: #f4f1f5;
+$orange-light: #ff6a00;
+$orange-main: #ff6a00;
+$orange-light: #ff9b3d;
+$orange-gradient: linear-gradient(180deg, #ff9b3dcb 0%, #ff6a00 100%);
 $inter: inter;
 $RussoOne: russoone;
 
@@ -59,7 +63,7 @@ body.menu-open {
         span {
             width: 30px;
             height: 3px;
-            background: white;
+            background: $white-main;
             transition: 0.4s ease;
             transform-origin: center;
             display: block;
@@ -93,7 +97,7 @@ body.menu-open {
 
                 a {
                     text-decoration: none;
-                    color: $white;
+                    color: $white-main;
                     font-size: clamp(16px, 2vw, 20px);
                     font-family: $RussoOne;
                     letter-spacing: 1px;
@@ -104,30 +108,53 @@ body.menu-open {
                         content: '';
                         position: absolute;
                         bottom: -5px;
-                        left: 0;
-                        width: 0;
+                        left: 50%;
+                        transform: translateX(-50%) scaleX(0);
+                        transform-origin: center;
+
+                        width: 100%;
                         height: 2px;
-                        background: red;
-                        transition: 0.4s;
+                        background: $orange-gradient;
+
+                        transition: transform 0.35s ease;
                     }
 
-                    &:hover::after {
-                        width: 100%;
+                    &:hover,
+                    &:focus,
+                    &:active {
+                        color: $orange-main;
+                    }
+
+                    &:hover::after,
+                    &:focus::after,
+                    &:active::after {
+                        transform: translateX(-50%) scaleX(1);
                     }
                 }
 
                 &:last-child a {
-                    padding: 10px 20px;
-                    color: white;
-                    background: #ff0000cc;
-                    border-radius: 8px;
+                    padding: 14px 24px;
+                    background: $orange-gradient;
+                    color: $white-main;
+                    border-radius: 10px;
+                    box-shadow:
+                        0 10px 30px rgba($orange-main, 0.28),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.18);
+                    transition:
+                        all 0.3s ease;
 
                     &::after {
                         display: none;
                     }
 
                     &:hover {
-                        color: black;
+                        transform: scale(1.05);
+                        background-color: #ff6a00bb;
+                    }
+
+                    &:focus, &:active {
+                        transform: scale(1.01);
+                        background-color: #ff6a00bb;
                     }
                 }
             }
@@ -226,7 +253,7 @@ body.menu-open {
             align-items: center;
             text-align: center;
             text-decoration: none;
-            color: $white;
+            color: $white-main;
             font-size: clamp(20px, 4vw, 28px);
             font-family: $RussoOne;
             letter-spacing: 1px;
@@ -244,15 +271,14 @@ body.menu-open {
 
                 width: 100%;
                 height: 2px;
-                background: #ff0000;
-
+                background: $orange-gradient;
                 transition: transform 0.35s ease;
             }
 
             &:hover,
             &:focus,
             &:active {
-                color: #ff0000;
+                color: $orange-light;
             }
 
             &:hover::after,
@@ -264,21 +290,23 @@ body.menu-open {
 
         &:last-child a {
             padding: 14px 24px;
-            background: #ff0000;
-            color: #fff;
+            background: $orange-gradient;
+            color: $white-main;
             border-radius: 10px;
+            transition: all 0.3s ease;
 
             &::after {
-                display: none; // ❗ убираем линию полностью
+                display: none;
             }
 
             &:hover,
             &:focus,
             &:active {
-                background: #ff2a2a; // меняется только фон
-                color: #fff; // текст остается белым
+                background: $orange-main;
+                color: $white-main;
+                box-shadow: 0 8px 25px rgba($orange-main, 0.4);
             }
-        }   
+        }
     }
 
     &.active li {
