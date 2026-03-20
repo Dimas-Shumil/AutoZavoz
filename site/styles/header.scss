@@ -87,22 +87,24 @@ body.menu-open {
 
         ul {
             display: flex;
-            gap: 25px;
+            gap: 16px;
             align-items: center;
             margin: 0;
             padding: 0;
 
             li {
                 list-style: none;
+                white-space: nowrap;
 
                 a {
                     text-decoration: none;
                     color: $white-main;
-                    font-size: clamp(16px, 2vw, 20px);
+                    font-size: clamp(10px, 1.2vw, 14px);
                     font-family: $RussoOne;
                     letter-spacing: 1px;
+                    white-space: nowrap;
                     position: relative;
-                    transition: 0.3s;
+                    transition: all 0.3s ease;
 
                     &::after {
                         content: '';

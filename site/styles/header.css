@@ -71,22 +71,24 @@ body.menu-open {
 }
 .header__nav ul {
   display: flex;
-  gap: 25px;
+  gap: 16px;
   align-items: center;
   margin: 0;
   padding: 0;
 }
 .header__nav ul li {
   list-style: none;
+  white-space: nowrap;
 }
 .header__nav ul li a {
   text-decoration: none;
   color: #f4f1f5;
-  font-size: clamp(16px, 2vw, 20px);
+  font-size: clamp(10px, 1.2vw, 14px);
   font-family: russoone;
   letter-spacing: 1px;
+  white-space: nowrap;
   position: relative;
-  transition: 0.3s;
+  transition: all 0.3s ease;
 }
 .header__nav ul li a::after {
   content: "";
