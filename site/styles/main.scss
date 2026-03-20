@@ -499,7 +499,7 @@ body.no-scroll {
             color: $white-main;
 
             span {
-                color: $orange-light;
+                color: $orange-dark;
             }
         }
 
@@ -558,6 +558,93 @@ body.no-scroll {
                 0 45px 90px rgba(0, 0, 0, 0.25),
                 0 25px 50px rgba(0, 0, 0, 0.1),
                 0 35px 70px rgba(255, 106, 0, 0.147);
+        }
+    }
+}
+
+// секция как мы работаем WORK
+
+.work {
+    width: 100%;
+    background-color: #0d0d12;
+    padding: 96px 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &-container {
+        max-width: 1720px;
+        width: 100%;
+    }
+
+    &__title {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: space-between;
+        gap: 16px;
+
+        h2 {
+            font-size: 48px;
+            line-height: 1.2;
+            letter-spacing: 2px;
+            font-weight: 700;
+            font-family: $RussoOne;
+            color: $white-main;
+
+            span {
+                color: $orange-dark;
+            }
+        }
+
+        p {
+            font-size: 24px;
+            text-align: center;
+            line-height: 1.2;
+            letter-spacing: 1.1px;
+            color: $white-soft;
+        }
+    }
+
+    &__block {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 32px;
+        margin-top: 48px;
+
+        &-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            max-width: 203px;
+
+            h3 {
+                font-size: 18px;
+                color: $white-main;
+                letter-spacing: 1.3px;
+                text-align: center;
+            }
+
+            p {
+                color: $white-soft;
+                font-size: 14px;
+                text-align: center;
+            }
+        }
+
+        .work-number {
+            color: $orange-dark;
+            padding: 20px;
+            border-radius: 50%;
+            font-weight: 700;
+            line-height: 1;
+            font-size: 20px;
+            letter-spacing: 1.6px;
+            border: 2px solid $orange-dark;
         }
     }
 }
