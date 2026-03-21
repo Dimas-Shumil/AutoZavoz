@@ -787,88 +787,88 @@ body.no-scroll {
         &:nth-child(1) {
             .cars-card__image {
                 background:
-                linear-gradient(180deg,
-                    rgba(239, 222, 215, 0.9) 0%,
-                    rgba(75, 71, 88, 0.2) 55%,
-                    rgba(16, 18, 27, 0.95) 100%),
-                url("../img/mersCLA1802015.jpg") center center / cover no-repeat;
+                    linear-gradient(180deg,
+                        rgba(239, 222, 215, 0.9) 0%,
+                        rgba(75, 71, 88, 0.2) 55%,
+                        rgba(16, 18, 27, 0.95) 100%),
+                    url("../img/mersCLA1802015.jpg") center center / cover no-repeat;
             }
         }
 
         &:nth-child(2) {
             .cars-card__image {
                 background:
-                linear-gradient(180deg,
-                    rgba(239, 222, 215, 0.9) 0%,
-                    rgba(75, 71, 88, 0.2) 55%,
-                    rgba(16, 18, 27, 0.95) 100%),
-                url("../img/landCruiser300.jpg") center center / cover no-repeat;
+                    linear-gradient(180deg,
+                        rgba(239, 222, 215, 0.9) 0%,
+                        rgba(75, 71, 88, 0.2) 55%,
+                        rgba(16, 18, 27, 0.95) 100%),
+                    url("../img/landCruiser300.jpg") center center / cover no-repeat;
             }
         }
 
         &:nth-child(3) {
             .cars-card__image {
                 background:
-                linear-gradient(180deg,
-                    rgba(239, 222, 215, 0.9) 0%,
-                    rgba(75, 71, 88, 0.2) 55%,
-                    rgba(16, 18, 27, 0.95) 100%),
-                url("../img/crown2019.jpg") center center / cover no-repeat;
+                    linear-gradient(180deg,
+                        rgba(239, 222, 215, 0.9) 0%,
+                        rgba(75, 71, 88, 0.2) 55%,
+                        rgba(16, 18, 27, 0.95) 100%),
+                    url("../img/crown2019.jpg") center center / cover no-repeat;
             }
         }
 
         &:nth-child(4) {
             .cars-card__image {
                 background:
-                linear-gradient(180deg,
-                    rgba(239, 222, 215, 0.9) 0%,
-                    rgba(75, 71, 88, 0.2) 55%,
-                    rgba(16, 18, 27, 0.95) 100%),
-                url("../img/kiak5.jpg") center center / cover no-repeat;
+                    linear-gradient(180deg,
+                        rgba(239, 222, 215, 0.9) 0%,
+                        rgba(75, 71, 88, 0.2) 55%,
+                        rgba(16, 18, 27, 0.95) 100%),
+                    url("../img/kiak5.jpg") center center / cover no-repeat;
             }
         }
 
         &:nth-child(5) {
             .cars-card__image {
                 background:
-                linear-gradient(180deg,
-                    rgba(239, 222, 215, 0.9) 0%,
-                    rgba(75, 71, 88, 0.2) 55%,
-                    rgba(16, 18, 27, 0.95) 100%),
-                url("../img/hyundaiPalisade.jpg") center center / cover no-repeat;
+                    linear-gradient(180deg,
+                        rgba(239, 222, 215, 0.9) 0%,
+                        rgba(75, 71, 88, 0.2) 55%,
+                        rgba(16, 18, 27, 0.95) 100%),
+                    url("../img/hyundaiPalisade.jpg") center center / cover no-repeat;
             }
         }
 
         &:nth-child(6) {
             .cars-card__image {
                 background:
-                linear-gradient(180deg,
-                    rgba(239, 222, 215, 0.9) 0%,
-                    rgba(75, 71, 88, 0.2) 55%,
-                    rgba(16, 18, 27, 0.95) 100%),
-                url("../img/geelYMonjaro2023.jpg") center center / cover no-repeat;
+                    linear-gradient(180deg,
+                        rgba(239, 222, 215, 0.9) 0%,
+                        rgba(75, 71, 88, 0.2) 55%,
+                        rgba(16, 18, 27, 0.95) 100%),
+                    url("../img/geelYMonjaro2023.jpg") center center / cover no-repeat;
             }
         }
 
         &:nth-child(7) {
             .cars-card__image {
                 background:
-                linear-gradient(180deg,
-                    rgba(239, 222, 215, 0.9) 0%,
-                    rgba(75, 71, 88, 0.2) 55%,
-                    rgba(16, 18, 27, 0.95) 100%),
-                url("../img/camry.jpg") center center / cover no-repeat;
+                    linear-gradient(180deg,
+                        rgba(239, 222, 215, 0.9) 0%,
+                        rgba(75, 71, 88, 0.2) 55%,
+                        rgba(16, 18, 27, 0.95) 100%),
+                    url("../img/camry.jpg") center center / cover no-repeat;
             }
         }
 
         &:nth-child(8) {
             .cars-card__image {
                 background:
-                linear-gradient(180deg,
-                    rgba(239, 222, 215, 0.9) 0%,
-                    rgba(75, 71, 88, 0.2) 55%,
-                    rgba(16, 18, 27, 0.95) 100%),
-                url("../img/bmw5g30.jpg") center center / cover no-repeat;
+                    linear-gradient(180deg,
+                        rgba(239, 222, 215, 0.9) 0%,
+                        rgba(75, 71, 88, 0.2) 55%,
+                        rgba(16, 18, 27, 0.95) 100%),
+                    url("../img/bmw5g30.jpg") center center / cover no-repeat;
             }
         }
 
@@ -1334,6 +1334,104 @@ body.no-scroll {
                 font-size: 8px;
                 padding: 6px 8px;
             }
+        }
+    }
+}
+
+// секция country
+
+.country {
+    width: 100%;
+    background-color: #0d0d12;
+    padding: 96px 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &-container {
+        max-width: 1720px;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 64px;
+    }
+
+    &__title {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 48px;
+
+
+        h2 {
+            font-size: 48px;
+            line-height: 1.2;
+            letter-spacing: 2px;
+            font-weight: 700;
+            font-family: $RussoOne;
+            color: $white-main;
+
+            span {
+                color: $orange-dark;
+            }
+        }
+    }
+
+    &__block {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__item {
+        padding: 24px;
+        background: rgba(255, 255, 255, 0.08);
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        transition: all 0.55s ease;
+        max-width: 400px;
+        border-radius: 20px;
+
+        h3 {
+            font-size: 28px;
+            color: $white-main;
+        }
+
+        h4 {
+            font-size: 22px;
+            color: $white-main;
+            margin-bottom: 8px;
+        }
+
+        p {
+            color: $white-soft;
+            font-size: 16px;
+            line-height: 1.4;
+        }
+
+        &-bot {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid $border-light;
+
+            span {
+                font-size: 20px;
+                color: $white-main;
+                font-weight: 700;
+            }
+        }
+
+        &:hover {
+            border: 1px solid rgba(255, 132, 0, 0.28);
+            transform: none;
+            box-shadow:
+                0 45px 90px rgba(0, 0, 0, 0.25),
+                0 25px 50px rgba(0, 0, 0, 0.1),
+                0 35px 70px rgba(255, 106, 0, 0.147);
         }
     }
 }
