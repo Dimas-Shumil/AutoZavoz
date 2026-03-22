@@ -51,11 +51,11 @@ if (header) {
         // в самом верху страницы хедер всегда виден
         if (currentScrollY <= 10) {
             header.classList.remove('header--hidden');
-        } 
+        }
         // скроллим вниз — прячем
         else if (currentScrollY > lastScrollY && currentScrollY > 100) {
             header.classList.add('header--hidden');
-        } 
+        }
         // скроллим вверх — показываем
         else if (currentScrollY < lastScrollY) {
             header.classList.remove('header--hidden');
@@ -100,6 +100,62 @@ document.addEventListener('DOMContentLoaded', () => {
             if (burger && nav && nav.classList.contains('active')) {
                 burger.classList.remove('active');
                 nav.classList.remove('active');
+            }
+        });
+    });
+});
+
+
+
+const reviewsSwiper = new Swiper('.otzyvy-slider', {
+    slidesPerView: 3,
+    spaceBetween: 24,
+    loop: true,
+    speed: 800,
+
+    navigation: {
+        nextEl: '.otzyvy-button-next',
+        prevEl: '.otzyvy-button-prev',
+    },
+
+    breakpoints: {
+        0: {
+            slidesPerView: 1.1,
+            spaceBetween: 14,
+        },
+        480: {
+            slidesPerView: 1.2,
+            spaceBetween: 16,
+        },
+        768: {
+            slidesPerView: 2,
+            spaceBetween: 18,
+        },
+        1200: {
+            slidesPerView: 3,
+            spaceBetween: 24,
+        }
+    }
+});
+
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const faqItems = document.querySelectorAll('.faq__item');
+
+    faqItems.forEach((item) => {
+        const question = item.querySelector('.faq__question');
+
+        question.addEventListener('click', () => {
+            const isActive = item.classList.contains('active');
+
+            faqItems.forEach((faqItem) => {
+                faqItem.classList.remove('active');
+            });
+
+            if (!isActive) {
+                item.classList.add('active');
             }
         });
     });
