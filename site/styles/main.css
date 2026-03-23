@@ -382,7 +382,7 @@ body.no-scroll {
   -o-object-fit: cover;
      object-fit: cover;
   z-index: 0;
-  filter: brightness(0.42) saturate(1.05);
+  filter: brightness(1) saturate(1.05);
 }
 .hero__overlay {
   position: absolute;

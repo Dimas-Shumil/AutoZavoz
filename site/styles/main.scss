@@ -115,7 +115,7 @@ body.no-scroll {
         height: 100%;
         object-fit: cover;
         z-index: 0;
-        filter: brightness(0.42) saturate(1.05);
+        filter: brightness(1) saturate(1.05);
     }
 
     &__overlay {
