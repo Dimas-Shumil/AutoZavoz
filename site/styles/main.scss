@@ -1719,6 +1719,7 @@ body.no-scroll {
         }
     }
 }
+
 @media (max-width: 576px) {
     .cars {
         padding: 56px 14px;
@@ -1951,6 +1952,7 @@ body.no-scroll {
         }
     }
 }
+
 // секция country
 
 .country {
@@ -3997,52 +3999,95 @@ body.no-scroll {
 
 @media (max-width: 768px) {
     .footer {
-        padding: 44px 16px 28px;
+        padding: 60px 20px 30px;
+    }
 
-        &-container {
-            grid-template-columns: 1fr;
-            gap: 28px;
-        }
+    .footer-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+            "left left"
+            "nav contacts";
+        gap: 32px;
+        max-width: 100%;
+    }
 
-        &__left {
-            grid-column: auto;
-            max-width: 100%;
-        }
+    .footer__left {
+        grid-area: left;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+    }
 
-        &__logo {
-            font-size: 26px;
-        }
+    .footer__logo {
+        font-size: 24px;
+    }
 
-        &__text {
-            max-width: 100%;
-            font-size: 14px;
-        }
+    .footer__text {
+        font-size: 14px;
+        line-height: 1.5;
+        max-width: 100%;
+    }
 
-        &__socials {
-            gap: 10px;
+    .footer__socials {
+        display: flex;
+        gap: 12px;
 
-            a {
-                width: 36px;
-                height: 36px;
+        a {
+            width: 36px;
+            height: 36px;
 
-                img {
-                    width: 17px;
-                    height: 17px;
-                }
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
             }
         }
+    }
 
-        &__nav,
-        &__contacts {
-            h3 {
-                font-size: 17px;
-            }
+    .footer__nav {
+        grid-area: nav;
+
+        h3 {
+            font-size: 14px;
+            margin-bottom: 12px;
         }
 
-        &__nav a,
-        &__contact-item a,
-        &__contact-item p {
+        ul {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+
+            li a {
+                font-size: 13px;
+            }
+        }
+    }
+
+    .footer__contacts {
+        grid-area: contacts;
+
+        h3 {
             font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .footer__contact-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-bottom: 10px;
+
+            span {
+                font-size: 11px;
+                opacity: 0.6;
+            }
+
+            a,
+            p {
+                font-size: 13px;
+                line-height: 1.4;
+            }
         }
     }
 }
