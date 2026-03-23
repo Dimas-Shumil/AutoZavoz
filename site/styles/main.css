@@ -663,8 +663,8 @@ body.no-scroll {
   .hero {
     padding: 110px 14px 50px;
   }
-  .hero__overlay {
-    background: radial-gradient(circle at 50% 30%, rgba(255, 128, 0, 0.1), transparent 34%), linear-gradient(180deg, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.78) 48%, rgba(0, 0, 0, 0.9) 100%);
+  .hero__video {
+    filter: brightness(1) saturate(1.05);
   }
   .hero__badge {
     margin-bottom: 16px;
@@ -1450,6 +1450,7 @@ body.no-scroll {
   font-weight: 800;
   color: #f4f1f5;
   letter-spacing: -0.02em;
+  white-space: nowrap;
 }
 .cars .cars-card__arrow {
   width: 34px;
@@ -1594,7 +1595,7 @@ body.no-scroll {
     padding: 0 20px;
   }
   .cars__inner {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 20px;
   }
   .cars .cars-card {
@@ -1648,26 +1649,45 @@ body.no-scroll {
     font-size: 12px;
     letter-spacing: 0.03em;
   }
+  .cars__inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
   .cars .cars-card {
+    width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
     border-radius: 10px;
   }
   .cars .cars-card__image {
-    height: 210px;
+    height: 180px;
   }
   .cars .cars-card__content {
-    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 14px;
   }
   .cars .cars-card__title {
-    font-size: 18px;
+    font-size: 17px;
+    line-height: 1.2;
     margin-bottom: 8px;
+    min-height: 40px;
   }
   .cars .cars-card__meta {
-    gap: 10px;
-    margin-bottom: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 14px;
+    min-height: 34px;
   }
   .cars .cars-card__meta-item {
     gap: 6px;
-    font-size: 12px;
+    font-size: 11px;
+    line-height: 1.25;
   }
   .cars .cars-card__dot {
     width: 12px;
@@ -1677,21 +1697,69 @@ body.no-scroll {
   .cars .cars-card__dot::after {
     inset: 2px;
   }
+  .cars .cars-card__bottom {
+    margin-top: auto;
+    gap: 10px;
+  }
   .cars .cars-card__price {
-    font-size: 17px;
+    font-size: 15px;
   }
   .cars .cars-card__arrow {
-    width: 30px;
-    height: 30px;
-    font-size: 24px;
+    width: 28px;
+    height: 28px;
+    font-size: 22px;
   }
   .cars .cars-card__badge {
-    top: 12px;
-    right: 12px;
-    padding: 6px 10px;
-    min-height: 30px;
-    font-size: 9px;
-    border-radius: 10px;
+    top: 10px;
+    right: 10px;
+    padding: 5px 8px;
+    min-height: 28px;
+    font-size: 8px;
+    border-radius: 8px;
+  }
+}
+@media (max-width: 526px) {
+  .cars__inner {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .cars .cars-card {
+    border-radius: 8px;
+  }
+  .cars .cars-card__image {
+    height: 150px;
+  }
+  .cars .cars-card__content {
+    padding: 10px;
+  }
+  .cars .cars-card__title {
+    font-size: 15px;
+    line-height: 1.2;
+    min-height: 36px;
+  }
+  .cars .cars-card__meta {
+    gap: 6px;
+    margin-bottom: 12px;
+    min-height: 32px;
+  }
+  .cars .cars-card__meta-item {
+    font-size: 10px;
+    line-height: 1.2;
+  }
+  .cars .cars-card__price {
+    font-size: 13px;
+  }
+  .cars .cars-card__badge {
+    top: 8px;
+    right: 8px;
+    font-size: 7px;
+    padding: 4px 6px;
+    min-height: 24px;
+  }
+  .cars .cars-card__arrow {
+    width: 26px;
+    height: 26px;
+    font-size: 20px;
   }
 }
 @media (max-width: 420px) {
@@ -1709,6 +1777,12 @@ body.no-scroll {
     font-size: 11px;
     padding: 0 16px;
   }
+  .cars__inner {
+    gap: 16px;
+  }
+  .cars .cars-card {
+    border-radius: 10px;
+  }
   .cars .cars-card__image {
     height: 190px;
   }
@@ -1717,11 +1791,13 @@ body.no-scroll {
   }
   .cars .cars-card__title {
     font-size: 17px;
+    min-height: unset;
   }
   .cars .cars-card__meta {
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
+    min-height: unset;
   }
   .cars .cars-card__meta-item {
     font-size: 12px;
@@ -1735,6 +1811,7 @@ body.no-scroll {
   .cars .cars-card__badge {
     font-size: 8px;
     padding: 6px 8px;
+    min-height: 28px;
   }
 }
 .country {

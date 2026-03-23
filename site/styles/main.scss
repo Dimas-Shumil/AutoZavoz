@@ -450,10 +450,8 @@ body.no-scroll {
     .hero {
         padding: 110px 14px 50px;
 
-        &__overlay {
-            background:
-                radial-gradient(circle at 50% 30%, rgba(255, 128, 0, 0.1), transparent 34%),
-                linear-gradient(180deg, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.78) 48%, rgba(0, 0, 0, 0.9) 100%);
+        &__video {
+            filter: brightness(1) saturate(1.05);
         }
 
         &__badge {
@@ -1500,6 +1498,7 @@ body.no-scroll {
             font-weight: 800;
             color: $white-main;
             letter-spacing: -0.02em;
+            white-space: nowrap;
         }
 
         &__arrow {
@@ -1677,7 +1676,7 @@ body.no-scroll {
         }
 
         &__inner {
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 20px;
         }
 
@@ -1720,7 +1719,6 @@ body.no-scroll {
         }
     }
 }
-
 @media (max-width: 576px) {
     .cars {
         padding: 56px 14px;
@@ -1747,30 +1745,50 @@ body.no-scroll {
             }
         }
 
+        &__inner {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
         .cars-card {
+            width: 100%;
+            max-width: 100%;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
             border-radius: 10px;
 
             &__image {
-                height: 210px;
+                height: 180px;
             }
 
             &__content {
-                padding: 16px;
+                display: flex;
+                flex-direction: column;
+                flex: 1;
+                padding: 14px;
             }
 
             &__title {
-                font-size: 18px;
+                font-size: 17px;
+                line-height: 1.2;
                 margin-bottom: 8px;
+                min-height: 40px;
             }
 
             &__meta {
-                gap: 10px;
-                margin-bottom: 16px;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: flex-start;
+                gap: 8px;
+                margin-bottom: 14px;
+                min-height: 34px;
             }
 
             &__meta-item {
                 gap: 6px;
-                font-size: 12px;
+                font-size: 11px;
+                line-height: 1.25;
             }
 
             &__dot {
@@ -1783,23 +1801,84 @@ body.no-scroll {
                 }
             }
 
+            &__bottom {
+                margin-top: auto;
+                gap: 10px;
+            }
+
             &__price {
-                font-size: 17px;
+                font-size: 15px;
             }
 
             &__arrow {
-                width: 30px;
-                height: 30px;
-                font-size: 24px;
+                width: 28px;
+                height: 28px;
+                font-size: 22px;
             }
 
             &__badge {
-                top: 12px;
-                right: 12px;
-                padding: 6px 10px;
-                min-height: 30px;
-                font-size: 9px;
-                border-radius: 10px;
+                top: 10px;
+                right: 10px;
+                padding: 5px 8px;
+                min-height: 28px;
+                font-size: 8px;
+                border-radius: 8px;
+            }
+        }
+    }
+}
+
+@media (max-width: 526px) {
+    .cars {
+        &__inner {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .cars-card {
+            border-radius: 8px;
+
+            &__image {
+                height: 150px;
+            }
+
+            &__content {
+                padding: 10px;
+            }
+
+            &__title {
+                font-size: 15px;
+                line-height: 1.2;
+                min-height: 36px;
+            }
+
+            &__meta {
+                gap: 6px;
+                margin-bottom: 12px;
+                min-height: 32px;
+            }
+
+            &__meta-item {
+                font-size: 10px;
+                line-height: 1.2;
+            }
+
+            &__price {
+                font-size: 13px;
+            }
+
+            &__badge {
+                top: 8px;
+                right: 8px;
+                font-size: 7px;
+                padding: 4px 6px;
+                min-height: 24px;
+            }
+
+            &__arrow {
+                width: 26px;
+                height: 26px;
+                font-size: 20px;
             }
         }
     }
@@ -1825,7 +1904,13 @@ body.no-scroll {
             }
         }
 
+        &__inner {
+            gap: 16px;
+        }
+
         .cars-card {
+            border-radius: 10px;
+
             &__image {
                 height: 190px;
             }
@@ -1836,12 +1921,14 @@ body.no-scroll {
 
             &__title {
                 font-size: 17px;
+                min-height: unset;
             }
 
             &__meta {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 8px;
+                min-height: unset;
             }
 
             &__meta-item {
@@ -1859,11 +1946,11 @@ body.no-scroll {
             &__badge {
                 font-size: 8px;
                 padding: 6px 8px;
+                min-height: 28px;
             }
         }
     }
 }
-
 // секция country
 
 .country {
@@ -3346,7 +3433,7 @@ body.no-scroll {
 
         &__input {
             flex: 1;
-            height: 64px ;
+            height: 64px;
             padding: 0 18px;
             border: none;
             display: block;
@@ -3631,7 +3718,7 @@ body.no-scroll {
             }
 
             &__btn {
-                height: 50px ;
+                height: 50px;
                 padding: 0 12px;
                 font-size: 10px;
             }
