@@ -1471,6 +1471,135 @@ body.no-scroll {
   color: #ff5a00;
   transform: translateX(3px);
 }
+.cars .cars-card__modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: none;
+}
+.cars .cars-card__modal.active {
+  display: block;
+}
+.cars .cars-card__modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+}
+.cars .cars-card__modal-body {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 700px;
+  max-height: 90vh;
+  background: linear-gradient(180deg, #171924 0%, #11131b 100%);
+  border: 1.5px solid #ff5a00;
+  border-radius: 16px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 10px 30px rgba(255, 106, 0, 0.08);
+  overflow: hidden;
+}
+.cars .cars-card__modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  color: #f4f1f5;
+  cursor: pointer;
+  z-index: 2;
+}
+.cars .cars-card__modal-close:hover {
+  color: #ff5a00;
+}
+.cars .cars-card__modal-scroll {
+  overflow-y: auto;
+  max-height: 90vh;
+}
+.cars .cars-card__modal-image {
+  height: 260px;
+  background: linear-gradient(180deg, rgba(239, 222, 215, 0.9) 0%, rgba(75, 71, 88, 0.2) 55%, rgba(16, 18, 27, 0.95) 100%), url("../img/mersCLA1802015.jpg") center/cover no-repeat;
+}
+.cars .cars-card__modal-content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.cars .cars-card__modal-badge {
+  align-self: flex-start;
+  padding: 6px 12px;
+  font-size: 11px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.82);
+}
+.cars .cars-card__modal-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #f4f1f5;
+}
+.cars .cars-card__modal-price {
+  font-size: 20px;
+  font-weight: 800;
+  color: #f4f1f5;
+}
+.cars .cars-card__modal-grade {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid rgba(255, 106, 0, 0.2);
+  border-radius: 10px;
+  color: rgba(255, 255, 255, 0.82);
+}
+.cars .cars-card__modal-grade strong {
+  color: #ff5a00;
+  font-size: 18px;
+}
+.cars .cars-card__modal-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.cars .cars-card__modal-info div {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.82);
+}
+.cars .cars-card__modal-info div strong {
+  color: #f4f1f5;
+}
+.cars .cars-card__modal-link {
+  margin-top: 10px;
+  color: #ff5a00;
+  text-decoration: underline;
+  font-size: 14px;
+}
+.cars .cars-card__modal-btn {
+  margin-top: 10px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  border-radius: 12px;
+  background: #ff5a00;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: 0.25s;
+}
+.cars .cars-card__modal-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 106, 0, 0.4);
+}
+.cars .cars-card__modal-btn:active {
+  transform: translateY(0);
+}
 
 @media (max-width: 1440px) {
   .cars {
@@ -2997,7 +3126,7 @@ body.no-scroll {
   height: 64px;
   padding: 0 22px;
   border: none;
-  background: linear-gradient(180deg, #ff9b3d, #ff6a00);
+  background: linear-gradient(180deg, #ff5a00, #ff6a00);
   color: #fff;
   font-size: 14px;
   font-weight: 700;

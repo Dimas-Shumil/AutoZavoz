@@ -104,6 +104,48 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// модалка секции cars
+const cards = document.querySelectorAll('.cars-card');
+const modals = document.querySelectorAll('.cars-card__modal');
+
+// открыть
+cards.forEach(card => {
+    card.addEventListener('click', () => {
+        const id = card.dataset.id;
+
+        const modal = document.querySelector(`.cars-card__modal[data-id="${id}"]`);
+        if (!modal) return;
+
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+});
+
+// закрытие
+modals.forEach(modal => {
+    const closeBtn = modal.querySelector('.cars-card__modal-close');
+    const overlay = modal.querySelector('.cars-card__modal-overlay');
+
+    function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeModal);
+    }
+
+    if (overlay) {
+        overlay.addEventListener('click', closeModal);
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+});
+
 // SWIPER
 
 const reviewsSwiper = new Swiper('.otzyvy-slider', {

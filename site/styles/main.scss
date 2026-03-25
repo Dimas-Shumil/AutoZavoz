@@ -1522,6 +1522,163 @@ body.no-scroll {
             }
         }
     }
+
+    .cars-card__modal {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: none;
+
+        &.active {
+            display: block;
+        }
+
+        &-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(6px);
+        }
+
+        &-body {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            max-width: 700px;
+            max-height: 90vh;
+            background: linear-gradient(180deg, #171924 0%, #11131b 100%);
+            border: 1.5px solid $orange-dark;
+            border-radius: 16px;
+            box-shadow:
+                0 30px 80px rgba(0, 0, 0, 0.6),
+                0 10px 30px rgba(255, 106, 0, 0.08);
+            overflow: hidden;
+        }
+
+        &-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: transparent;
+            border: none;
+            font-size: 28px;
+            color: $white-main;
+            cursor: pointer;
+            z-index: 2;
+
+            &:hover {
+                color: $orange-dark;
+            }
+        }
+
+        &-scroll {
+            overflow-y: auto;
+            max-height: 90vh;
+        }
+
+        &-image {
+            height: 260px;
+            background:
+                linear-gradient(180deg,
+                    rgba(239, 222, 215, 0.9) 0%,
+                    rgba(75, 71, 88, 0.2) 55%,
+                    rgba(16, 18, 27, 0.95) 100%),
+                url("../img/mersCLA1802015.jpg") center/cover no-repeat;
+        }
+
+        &-content {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        &-badge {
+            align-self: flex-start;
+            padding: 6px 12px;
+            font-size: 11px;
+            border-radius: 10px;
+            border: 1px solid $border-light;
+            background: rgba(255, 255, 255, 0.04);
+            color: $white-soft;
+        }
+
+        &-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: $white-main;
+        }
+
+        &-price {
+            font-size: 20px;
+            font-weight: 800;
+            color: $white-main;
+        }
+
+        &-grade {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            border: 1px solid rgba(255, 106, 0, 0.2);
+            border-radius: 10px;
+            color: $white-soft;
+
+            strong {
+                color: $orange-dark;
+                font-size: 18px;
+            }
+        }
+
+        &-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            div {
+                display: flex;
+                justify-content: space-between;
+                font-size: 14px;
+                color: $white-soft;
+
+                strong {
+                    color: $white-main;
+                }
+            }
+        }
+
+        &-link {
+            margin-top: 10px;
+            color: $orange-dark;
+            text-decoration: underline;
+            font-size: 14px;
+        }
+
+        &-btn {
+            margin-top: 10px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            height: 50px;
+            border-radius: 12px;
+            background: $orange-dark;
+            color: #fff;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.25s;
+
+            &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(255, 106, 0, 0.4);
+            }
+
+            &:active {
+        transform: translateY(0);
+    }
+        }
+    }
 }
 
 @media (max-width: 1440px) {
@@ -3454,7 +3611,7 @@ body.no-scroll {
             height: 64px;
             padding: 0 22px;
             border: none;
-            background: linear-gradient(180deg, $orange-light, $orange-main);
+            background: linear-gradient(180deg, $orange-dark, $orange-main);
             color: #fff;
             font-size: 14px;
             font-weight: 700;
