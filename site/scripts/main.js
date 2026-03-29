@@ -230,3 +230,136 @@ phoneInput.addEventListener('input', (e) => {
 
     e.target.value = result;
 });
+
+
+//  форма
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('contactForm');
+    if (!form) return;
+
+    const submitBtn = form.querySelector('.contact-form__btn');
+    const notice = document.getElementById('formNotice');
+    const noticeClose = document.getElementById('formNoticeClose');
+    const noticeTitle = notice?.querySelector('.contact-form-notice__title');
+    const noticeDescr = notice?.querySelector('.contact-form-notice__descr');
+    const noticeIcon = notice?.querySelector('.contact-form-notice__icon');
+
+    if (!submitBtn || !notice || !noticeClose || !noticeTitle || !noticeDescr || !noticeIcon) {
+        console.error('Не найдены элементы формы или уведомления.');
+        return;
+    }
+
+    const originalBtnText = submitBtn.textContent;
+    let isSubmitting = false;
+    let noticeTimer = null;
+
+    const showNotice = (type, title, text) => {
+        notice.classList.remove('contact-form-notice--error', 'show');
+
+        if (type === 'error') {
+            notice.classList.add('contact-form-notice--error');
+            noticeIcon.textContent = '!';
+        } else {
+            noticeIcon.textContent = '✓';
+        }
+
+        noticeTitle.textContent = title;
+        noticeDescr.textContent = text;
+        notice.setAttribute('aria-hidden', 'false');
+
+        requestAnimationFrame(() => {
+            notice.classList.add('show');
+        });
+
+        clearTimeout(noticeTimer);
+        noticeTimer = setTimeout(() => {
+            notice.classList.remove('show');
+            notice.setAttribute('aria-hidden', 'true');
+        }, 4000);
+    };
+
+    noticeClose.addEventListener('click', () => {
+        notice.classList.remove('show');
+        notice.setAttribute('aria-hidden', 'true');
+        clearTimeout(noticeTimer);
+    });
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        if (isSubmitting) return;
+
+        const phoneInput = form.querySelector('input[name="phone"]');
+        const emailInput = form.querySelector('input[name="email"]');
+        const commentInput = form.querySelector('textarea[name="comment"]');
+        const botcheckInput = form.querySelector('input[name="botcheck"]');
+
+        const phone = phoneInput?.value.trim() || '';
+        const email = emailInput?.value.trim() || '';
+        const comment = commentInput?.value.trim() || '';
+
+        if (!phone || !email) {
+            showNotice('error', 'Ошибка формы', 'Заполните телефон и email.');
+            return;
+        }
+
+        if (botcheckInput && botcheckInput.checked) {
+            showNotice('error', 'Ошибка отправки', 'Проверка не пройдена.');
+            return;
+        }
+
+        isSubmitting = true;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'ОТПРАВКА...';
+
+        try {
+            const formData = new FormData(form);
+
+            // Дополнительные поля для письма
+            formData.set('subject', 'Новая заявка с сайта');
+            formData.set('from_name', 'Форма обратной связи');
+            formData.set('replyto', email);
+            formData.set(
+                'message',
+                `Телефон: ${phone}\nEmail: ${email}\nКомментарий: ${comment || 'Не указан'}`
+            );
+
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json'
+                },
+                body: formData
+            });
+
+            const data = await response.json();
+            console.log('Web3Forms response:', data);
+
+            if (response.ok && data.success) {
+                showNotice(
+                    'success',
+                    'Заявка отправлена',
+                    'Мы свяжемся с вами в ближайшее время.'
+                );
+                form.reset();
+            } else {
+                showNotice(
+                    'error',
+                    'Ошибка отправки',
+                    data.message || 'Не удалось отправить форму. Попробуйте еще раз.'
+                );
+            }
+        } catch (error) {
+            console.error('Web3Forms error:', error);
+            showNotice(
+                'error',
+                'Ошибка соединения',
+                'Проверьте интернет и попробуйте снова.'
+            );
+        } finally {
+            isSubmitting = false;
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalBtnText;
+        }
+    });
+});

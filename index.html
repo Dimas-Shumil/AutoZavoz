@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="site/img/logo.PNG">
+    <link rel="shortcut icon" href="site/img/Logo (2).png">
     <link rel="stylesheet" href="site/styles/main.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <title>АвтоZавоз</title>
@@ -259,7 +259,7 @@
 
     <!-- форма обратной связи -->
 
-    <section class="bottom" id="form">
+    <section class="bottom">
         <div class="bottom-container">
             <div class="bottom__title">
                 <h2>
@@ -1068,6 +1068,10 @@
                 <h2>ОСТАВЬТЕ <span>ЗАЯВКУ</span></h2>
 
                 <form class="contact-form" id="contactForm">
+                    <input type="hidden" name="access_key" value="98356aac-95ce-488d-8bad-aa45c03285d5">
+                    <input type="hidden" name="subject" value="Новая заявка с сайта">
+                    <input type="hidden" name="from_name" value="Форма обратной связи">
+                    <input type="checkbox" name="botcheck" style="display:none;">
                     <input type="tel" name="phone" placeholder="Телефон" required class="contact-form__input" />
                     <input type="email" name="email" placeholder="Email" required class="contact-form__input" />
 
@@ -1082,6 +1086,22 @@
                         Нажимая кнопку, вы соглашаетесь с политикой
                     </p>
                 </form>
+
+                <div class="contact-form-notice" id="formNotice" aria-live="polite" aria-hidden="true">
+                    <div class="contact-form-notice__content">
+                        <div class="contact-form-notice__icon">✓</div>
+
+                        <div class="contact-form-notice__text">
+                            <h3 class="contact-form-notice__title">Заявка отправлена</h3>
+                            <p class="contact-form-notice__descr">Мы свяжемся с вами в ближайшее время.</p>
+                        </div>
+
+                        <button type="button" class="contact-form-notice__close" id="formNoticeClose"
+                            aria-label="Закрыть уведомление">
+                            ✕
+                        </button>
+                    </div>
+                </div>
             </div>
 
         </div>
