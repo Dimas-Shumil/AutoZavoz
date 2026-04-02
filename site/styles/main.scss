@@ -31,7 +31,7 @@ $oswald: oswald;
     background: rgba(255, 255, 255, $opacity);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-}
+} 
 
 // @mixin gradient-text {
 //     color: transparent;
@@ -64,18 +64,18 @@ $oswald: oswald;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-}
+} 
 
 
 html {
-    scroll-behavior: smooth;
+    scroll-behavior: smooth; 
 }
 
 body {
     font-family: 'Inter', sans-serif;
     line-height: 1.6;
     // color: $dark;
-    overflow-x: hidden;
+    overflow-x: hidden; 
 }
 
 body.no-scroll {
