@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>ShumDev CMS — Dashboard</title>
+
+    <link rel="stylesheet" href="/site/css/dashboard.css" />
+  </head>
+
+  <body class="admin-dashboard-page">
+    <div class="admin-layout">
+      <aside class="admin-sidebar">
+        <div class="admin-sidebar__top">
+          <p class="admin-sidebar__badge">SHUMDEV CMS</p>
+
+          <h2>AutoZavoz</h2>
+        </div>
+
+        <nav class="admin-sidebar__nav">
+          <a class="active" href="#" data-panel="dashboard">
+            <img
+              src="/site/img/admin-icon/home-page.png"
+              alt="Страница домой"
+            />
+            Dashboard
+          </a>
+
+          <a href="#" data-panel="cars">
+            <img
+              src="/site/img/admin-icon/cars.png"
+              alt="Страница автомобилей"
+            />
+            Автомобили
+          </a>
+
+          <a href="#" data-panel="leads">
+            <img src="/site/img/admin-icon/offers.png" alt="Страница заявок" />
+            Заявки
+          </a>
+
+          <a href="#" data-panel="settings">
+            <img
+              src="/site/img/admin-icon/settings.png"
+              alt="Страница настроек"
+            />
+            Настройки
+          </a>
+        </nav>
+
+        <button class="admin-logout" id="adminLogoutButton">Выйти</button>
+      </aside>
+
+      <main class="admin-content">
+        <section class="admin-panel is-active" data-panel-content="dashboard">
+          <header class="admin-header">
+            <div>
+              <p class="admin-header__label">Панель управления</p>
+
+              <h1>Dashboard</h1>
+            </div>
+
+            <div class="admin-header__profile">
+              <span id="adminName">Admin</span>
+            </div>
+          </header>
+
+          <section class="admin-stats">
+            <article class="admin-stat-card">
+              <span>Автомобили</span>
+              <strong id="carsCount">—</strong>
+            </article>
+
+            <article class="admin-stat-card">
+              <span>Активные</span>
+              <strong>—</strong>
+            </article>
+
+            <article class="admin-stat-card">
+              <span>Заявки</span>
+              <strong>—</strong>
+            </article>
+          </section>
+        </section>
+
+        <section class="admin-panel" data-panel-content="cars">
+          <header class="admin-header">
+            <div>
+              <p class="admin-header__label">Каталог</p>
+              <h1>Автомобили</h1>
+            </div>
+
+            <div class="admin-header__profile">
+              <span>CMS</span>
+            </div>
+          </header>
+          <section class="admin-section">
+            <div class="admin-section__top">
+              <div>
+                <p class="admin-section__label">Каталог</p>
+                <h2>Автомобили</h2>
+              </div>
+
+              <button class="admin-primary-btn" id="openCreateCarModal">
+                Добавить авто
+              </button>
+            </div>
+
+            <div class="admin-table-wrapper">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Автомобиль</th>
+                    <th>Год</th>
+                    <th>Цена</th>
+                    <th>Статус</th>
+                    <th>Действия</th>
+                  </tr>
+                </thead>
+
+                <tbody id="carsTableBody"></tbody>
+              </table>
+            </div>
+          </section>
+        </section>
+        <section class="admin-panel" data-panel-content="leads"></section>
+        <section class="admin-panel" data-panel-content="settings"></section>
+      </main>
+    </div>
+
+    <div class="admin-modal" id="carModal">
+      <div class="admin-modal__overlay"></div>
+
+      <div class="admin-modal__body">
+        <button class="admin-modal__close" id="closeCarModal" type="button">
+          ×
+        </button>
+
+        <div class="admin-modal__content">
+          <h2 id="carModalTitle">Добавить автомобиль</h2>
+
+          <form class="admin-form" id="carForm">
+            <div class="admin-form__grid">
+              <div class="admin-form__group">
+                <label for="carTitle">Название</label>
+
+                <input
+                  id="carTitle"
+                  name="title"
+                  type="text"
+                  placeholder="Toyota Land Cruiser 300"
+                  required
+                />
+              </div>
+
+              <div class="admin-form__group">
+                <label for="carPrice">Цена</label>
+
+                <input
+                  id="carPrice"
+                  name="price"
+                  type="text"
+                  placeholder="7 850 000 ₽"
+                  required
+                />
+              </div>
+
+              <div class="admin-form__group">
+                <label for="carYear">Год</label>
+
+                <input
+                  id="carYear"
+                  name="year"
+                  type="text"
+                  placeholder="2022"
+                />
+              </div>
+
+              <div class="admin-form__group">
+                <label for="carEngine">Двигатель</label>
+
+                <input
+                  id="carEngine"
+                  name="engine"
+                  type="text"
+                  placeholder="3.5 AT"
+                />
+              </div>
+
+              <div class="admin-form__group">
+                <label for="carMileage">Пробег</label>
+
+                <input
+                  id="carMileage"
+                  name="mileage"
+                  type="text"
+                  placeholder="24 000 км"
+                />
+              </div>
+
+              <div class="admin-form__group">
+                <label for="carDrive">Привод</label>
+
+                <input
+                  id="carDrive"
+                  name="drive"
+                  type="text"
+                  placeholder="4WD"
+                />
+              </div>
+
+              <div class="admin-form__group">
+                <label for="carGearbox">Коробка</label>
+
+                <input
+                  id="carGearbox"
+                  name="gearbox"
+                  type="text"
+                  placeholder="Автомат"
+                />
+              </div>
+
+              <div class="admin-form__group">
+                <label for="carGrade">Оценка</label>
+
+                <input
+                  id="carGrade"
+                  name="grade"
+                  type="text"
+                  placeholder="4.5"
+                />
+              </div>
+
+              <div class="admin-form__group admin-form__group--full">
+                <label for="carComplectation">Комплектация</label>
+
+                <input
+                  id="carComplectation"
+                  name="complectation"
+                  type="text"
+                  placeholder="ZX Package"
+                />
+              </div>
+
+              <div class="admin-form__group admin-form__group--full">
+                <label for="carImage">Фото</label>
+
+                <div class="admin-form__group admin-form__group--full">
+                  <label>Фото автомобиля</label>
+
+                  <div class="admin-upload-grid">
+                    <label class="admin-upload" data-upload-zone>
+                      <input
+                        id="carPreviewImage"
+                        name="previewImage"
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp"
+                      />
+
+                      <span class="admin-upload__icon">＋</span>
+                      <strong>Фото карточки</strong>
+                      <small>Показывается в каталоге</small>
+                      <img
+                        class="admin-upload__preview"
+                        id="previewImagePreview"
+                        alt="Preview"
+                      />
+                    </label>
+
+                    <label class="admin-upload" data-upload-zone>
+                      <input
+                        id="carImage"
+                        name="image"
+                        type="file"
+                        accept="image/jpeg,image/png,image/webp"
+                      />
+
+                      <span class="admin-upload__icon">＋</span>
+                      <strong>Фото модалки</strong>
+                      <small>Большое фото внутри карточки</small>
+                      <img
+                        class="admin-upload__preview"
+                        id="imagePreview"
+                        alt="Preview"
+                      />
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="admin-form__actions">
+              <button
+                class="admin-secondary-btn"
+                type="button"
+                id="cancelCarForm"
+              >
+                Отмена
+              </button>
+
+              <button class="admin-primary-btn" type="submit">Сохранить</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-toast" id="adminToast" aria-live="polite"></div>
+
+    <script src="/admin/js/dashboard.js"></script>
+  </body>
+</html>
