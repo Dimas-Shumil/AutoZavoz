@@ -15,23 +15,23 @@
     <!-- SEO -->
     <meta name="description"
         content="Авто под заказ из Японии, Кореи и Китая в Абакане. Подбор, покупка, доставка, растаможка и сопровождение под ключ. Поможем привезти автомобиль быстро, безопасно и выгодно.">
-    <meta name="robots" content="index, follow, max-image-preview:large"> 
+    <meta name="robots" content="index, follow, max-image-preview:large">
     <link rel="canonical" href="https://avtozavoz19.ru/">
 
     <!-- ЯЗЫК / ТЕМА -->
-    <meta name="language" content="Russian"> 
-    <meta name="theme-color" content="#0f0f12"> 
-    <meta name="format-detection" content="telephone=no">  
+    <meta name="language" content="Russian">
+    <meta name="theme-color" content="#0f0f12">
+    <meta name="format-detection" content="telephone=no">
 
     <!-- FAVICON -->
-    <link rel="icon" type="image/png" href="/site/img/logoIcon.png"> 
-    <link rel="apple-touch-icon" href="/site/img/logoIcon.png"> 
-    <link rel="icon" type="image/png" sizes="192x192" href="/site/img/logoIcon.png"> 
+    <link rel="icon" type="image/png" href="/site/img/logoIcon.png">
+    <link rel="apple-touch-icon" href="/site/img/logoIcon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/site/img/logoIcon.png">
     <link rel="shortcut icon" href="/site/img/logoIcon.png">
 
     <!-- OPEN GRAPH -->
     <meta property="og:locale" content="ru_RU">
-    <meta property="og:type" content="website"> 
+    <meta property="og:type" content="website">
     <meta property="og:title" content="Авто из Японии, Кореи и Китая под заказ в Абакане — АвтоZавоз">
     <meta property="og:description"
         content="Подбор, доставка и растаможка автомобилей под ключ. Работаем с Японией, Кореей и Китаем.">
@@ -48,11 +48,11 @@
     <meta name="twitter:image" content="https://avtozavoz19.ru/site/logoIcon.png">
 
     <!-- ПОДКЛЮЧЕНИЕ СТИЛЕЙ -->
-    <link rel="stylesheet" href="site/styles/main.css"> 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"> 
+    <link rel="stylesheet" href="site/css/main.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
 
     <!-- PRECONNECT ДЛЯ CDN -->
-    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin> 
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 
     <!-- STRUCTURED DATA -->
     <script type="application/ld+json">
@@ -67,7 +67,7 @@
         "areaServed": "Россия",
         "priceRange": "₽₽"
     }
-    </script> 
+    </script>
 </head>
 
 <body>
@@ -96,7 +96,6 @@
             <span></span>
             <span></span>
         </button>
-    </header>
 
     <div class="mobile-menu-overlay"></div>
 
@@ -337,16 +336,19 @@
                 </p>
             </div>
 
-            <div class="bottom__action">
-                <a href="tel:+79339943077" class="bottom__call-btn"
-                    aria-label="Позвонить в АвтоZавоз для расчета стоимости автомобиля">
-                    ПОЗВОНИТЬ НАМ
-                </a>
+           <div class="bottom__action">
+  <a
+    href="tel:+79339943077"
+    class="bottom__call-btn"
+    aria-label="Позвонить в АвтоZавоз для расчета стоимости автомобиля"
+  >
+    ПОЗВОНИТЬ НАМ
+  </a>
 
-                <p class="bottom__note">
-                    Бесплатная консультация по подбору, покупке, доставке и растаможке автомобиля.
-                </p>
-            </div>
+  <p class="bottom__note">
+    Бесплатная консультация по подбору, покупке, доставке и растаможке автомобиля.
+  </p>
+</div>
         </div>
     </section>
 
@@ -1416,29 +1418,82 @@
             <div class="contact-order__form-block" aria-labelledby="contact-order-form-title">
                 <h2 id="contact-order-form-title">ОСТАВЬТЕ <span>ЗАЯВКУ</span></h2>
 
-                <form class="contact-form" id="contactForm" aria-label="Форма заявки на подбор автомобиля">
-                    <input type="hidden" name="access_key" value="98356aac-95ce-488d-8bad-aa45c03285d5">
-                    <input type="hidden" name="subject" value="Новая заявка с сайта">
-                    <input type="hidden" name="from_name" value="Форма обратной связи">
-                    <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off">
+               <form
+  class="contact-form"
+  id="contactForm"
+  action="/api/send"
+  method="post"
+  novalidate
+>
 
-                    <input type="tel" name="phone" placeholder="Телефон" required aria-required="true"
-                        autocomplete="tel" inputmode="tel" class="contact-form__input" />
+<input type="hidden" name="form_time" id="formTime" />
 
-                    <input type="email" name="email" placeholder="Email" required aria-required="true"
-                        autocomplete="email" inputmode="email" class="contact-form__input" />
+  <div class="contact-form__field">
+    <input
+      class="contact-form__input"
+      type="tel"
+      name="phone"
+      placeholder="Телефон"
+      autocomplete="tel"
+      inputmode="tel"
+      maxlength="18"
+      required
+    />
+  </div>
 
-                    <textarea name="comment" placeholder="Расскажите о своих пожеланиях и уточните ваш бюджет"
-                        autocomplete="off" class="contact-form__textarea"></textarea>
+  <div class="contact-form__field">
+    <input
+      class="contact-form__input"
+      type="email"
+      name="email"
+      placeholder="Email"
+      autocomplete="email"
+      maxlength="120"
+      required
+    />
+  </div>
 
-                    <button type="submit" class="contact-form__btn" aria-label="Отправить заявку">
-                        ОТПРАВИТЬ ЗАЯВКУ
-                    </button>
+  <div class="contact-form__field">
+    <input
+      class="contact-form__input"
+      type="text"
+      name="car"
+      placeholder="Интересующий автомобиль"
+      maxlength="120"
+    />
+  </div>
 
-                    <p class="contact-form__policy">
-                        Нажимая кнопку, вы соглашаетесь с политикой
-                    </p>
-                </form>
+  <div class="contact-form__field">
+    <textarea
+      class="contact-form__textarea"
+      name="comment"
+      placeholder="Пожелания и бюджет"
+      maxlength="1000"
+      rows="5"
+    ></textarea>
+  </div>
+
+  <input
+    type="text"
+    name="company"
+    class="contact-form__botcheck"
+    tabindex="-1"
+    autocomplete="off"
+    aria-hidden="true"
+  />
+
+  <button type="submit" class="contact-form__btn">
+    ОТПРАВИТЬ ЗАЯВКУ
+  </button>
+
+  <p class="contact-form__policy">
+    Нажимая кнопку «Отправить заявку», вы соглашаетесь с
+    <a href="/site/privacy-policy.html" target="_blank" rel="noopener noreferrer">
+      политикой конфиденциальности
+    </a>
+    и даете согласие на обработку персональных данных.
+  </p>
+</form>
 
                 <div class="contact-form-notice" id="formNotice" aria-live="polite" aria-hidden="true" role="status">
                     <div class="contact-form-notice__content">
@@ -1462,7 +1517,7 @@
 
     <!-- футер -->
     <footer class="footer" aria-labelledby="footer-logo-title">
-        <div class="footer-container">
+   <div class="footer-container">
             <div class="footer__left">
                 <a href="#home" class="footer__logo" id="footer-logo-title"
                     aria-label="Перейти к началу сайта АвтоZавоз">
@@ -1504,7 +1559,7 @@
                     <li><a href="#form">Получить расчёт</a></li>
                     <li><a href="#form">Разработка и дизайн сайта</a></li>
                     <li> <a href="site/privacy-policy.html" target="_blank" class="footer-link">Политика конфиденциальности</a></li>
-                    
+
                 </ul>
             </nav>
 
@@ -1542,6 +1597,24 @@
             </address>
         </div>
     </footer>
+
+    <div
+  class="contact-form-notice"
+  id="formNotice"
+  aria-hidden="true"
+>
+  <div class="contact-form-notice__content">
+    <div class="contact-form-notice__icon">✓</div>
+
+    <div class="contact-form-notice__text">
+      <h4 class="contact-form-notice__title">
+        Успешно
+      </h4>
+
+      <p class="contact-form-notice__descr">
+        Сообщение
+      </p>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="site/scripts/main.js"></script>

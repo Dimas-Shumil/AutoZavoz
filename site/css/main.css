@@ -3592,6 +3592,12 @@ body.no-scroll {
   background: rgba(255, 255, 255, 0.05);
   box-shadow: 0 0 0 3px rgba(255, 106, 0, 0.12);
 }
+.contact-order .contact-form__botcheck {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  pointer-events: none;
+}
 .contact-order .contact-form__input {
   height: 52px;
   padding: 0 16px;
@@ -3630,6 +3636,14 @@ body.no-scroll {
   text-align: center;
   color: rgba(255, 255, 255, 0.4);
   margin-top: 2px;
+}
+.contact-order .contact-form__policy a {
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: underline;
+  transition: color 0.25s ease;
+}
+.contact-order .contact-form__policy a:hover {
+  color: #f4f1f5;
 }
 .contact-order .contact-form-notice {
   position: fixed;
@@ -4206,4 +4220,4 @@ body.no-scroll {
   .footer__contact-item span {
     font-size: 10px;
   }
-}/*# sourceMappingURL=main.css.map */
+}

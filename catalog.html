@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Авто под заказ в Абакане — каталог автомобилей АвтоZавоз</title>
+    <meta
+      name="description"
+      content="Каталог автомобилей под заказ в Абакане. Авто из Японии, Кореи и Китая с доставкой, растаможкой и сопровождением под ключ."
+    />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://avtozavoz19.ru/catalog.html" />
+
+    <meta name="theme-color" content="#0f0f12" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <link rel="icon" type="image/png" href="/site/img/logoIcon.png" />
+    <link rel="apple-touch-icon" href="/site/img/logoIcon.png" />
+    <link rel="stylesheet" href="/site/css/catalog.css" />
+  </head>
+
+  <body class="catalog-page">
+    <header class="header">
+      <div class="header__logo">
+        <a href="/">
+          <img src="/site/img/Logo.png" alt="АвтоZавоз" />
+        </a>
+      </div>
+
+      <nav class="header__nav header__nav--desktop">
+        <ul>
+          <li><a href="/#advantages">ПРЕИМУЩЕСТВА</a></li>
+          <li><a href="/#work">КАК РАБОТАЕМ</a></li>
+          <li><a href="/catalog.html" class="is-active">КАТАЛОГ</a></li>
+          <li><a href="/#country">НАПРАВЛЕНИЯ</a></li>
+          <li><a href="/#otzyv">ОТЗЫВЫ</a></li>
+          <li><a href="/#faq">FAQ</a></li>
+          <li><a href="/#form">ПОЛУЧИТЬ РАСЧЕТ</a></li>
+        </ul>
+      </nav>
+
+      <button class="header__burger" type="button" aria-label="Открыть меню">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <div class="mobile-menu-overlay"></div>
+
+      <nav class="mobile-menu">
+        <ul>
+          <li><a href="/#advantages">ПРЕИМУЩЕСТВА</a></li>
+          <li><a href="/#work">КАК РАБОТАЕМ</a></li>
+          <li><a href="/catalog.html">КАТАЛОГ</a></li>
+          <li><a href="/#country">НАПРАВЛЕНИЯ</a></li>
+          <li><a href="/#otzyv">ОТЗЫВЫ</a></li>
+          <li><a href="/#faq">FAQ</a></li>
+          <li><a href="/#form">ПОЛУЧИТЬ РАСЧЕТ</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main class="catalog-main">
+      <section class="catalog-hero" aria-labelledby="catalog-page-title">
+        <div class="catalog-hero__container">
+          <nav class="breadcrumbs" aria-label="Хлебные крошки">
+            <a href="/">Главная</a>
+            <span>/</span>
+            <span>Каталог</span>
+          </nav>
+
+          <div class="catalog-hero__grid">
+            <div class="catalog-hero__content">
+              <!-- <p class="catalog-hero__badge">АВТОZАВОЗ / КАТАЛОГ</p> -->
+
+              <h1 id="catalog-page-title">
+                АВТО ПОД ЗАКАЗ <span>В АБАКАНЕ</span>
+              </h1>
+
+              <p class="catalog-hero__text">
+                Каталог автомобилей из Японии, Кореи и Китая. Подберём вариант
+                под ваш бюджет, проверим историю, организуем доставку,
+                растаможку и оформление документов.
+              </p>
+
+              <div class="catalog-hero__actions">
+                <a class="catalog-hero__btn" href="#catalog-list-title"
+                  >СМОТРЕТЬ АВТО</a
+                >
+                <a class="catalog-hero__link" href="/#form">ПОЛУЧИТЬ РАСЧЕТ</a>
+              </div>
+            </div>
+
+            <aside
+              class="catalog-hero__panel"
+              aria-label="Преимущества каталога"
+            >
+              <div class="catalog-hero__panel-top">
+                <span>Каталог</span>
+                <strong>Online</strong>
+              </div>
+
+              <div class="catalog-hero__panel-stat">
+                <strong id="catalogHeroCount">—</strong>
+                <span>авто доступно к заказу</span>
+              </div>
+
+              <div class="catalog-hero__panel-list">
+                <p>Япония / Корея / Китай</p>
+                <p>Расчёт под ключ</p>
+                <p>Фото, аукцион и характеристики</p>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="cars catalog-cars" aria-labelledby="catalog-list-title">
+        <div class="cars-container">
+          <div class="cars__title">
+            <h2 id="catalog-list-title">
+              КАТАЛОГ <br />
+              <span>АВТОМОБИЛЕЙ</span>
+            </h2>
+
+            <div class="cars__title-inner">
+              <p>
+                Актуальные модели, которые можно заказать с полным
+                сопровождением: подбор, покупка, доставка, таможня и документы.
+              </p>
+
+              <div class="catalog-search">
+                <input
+                  id="catalogSearch"
+                  type="search"
+                  placeholder="Поиск по названию..."
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="cars__inner"
+            id="catalogGrid"
+            role="list"
+            aria-label="Каталог автомобилей"
+          >
+            <div class="catalog-loading">Загружаем автомобили...</div>
+          </div>
+        </div>
+
+        <div
+          class="cars-card__modal"
+          id="carsModal"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="carsModalTitle"
+          aria-hidden="true"
+        >
+          <div class="cars-card__modal-overlay" aria-hidden="true"></div>
+
+          <div class="cars-card__modal-body">
+            <button
+              class="cars-card__modal-close"
+              type="button"
+              aria-label="Закрыть карточку автомобиля"
+            >
+              ×
+            </button>
+
+            <div class="cars-card__modal-scroll">
+              <div class="cars-card__modal-image">
+                <img id="carsModalPhoto" src="" alt="Фотография автомобиля" />
+              </div>
+
+              <div class="cars-card__modal-content">
+                <span class="cars-card__modal-badge" id="carsModalBadge"
+                  >Под заказ</span
+                >
+
+                <h3 class="cars-card__modal-title" id="carsModalTitle">
+                  Название автомобиля
+                </h3>
+
+                <div class="cars-card__modal-price" id="carsModalPrice">
+                  Цена уточняется
+                </div>
+
+                <div class="cars-card__modal-grade">
+                  <span>Оценка с аукциона</span>
+                  <strong id="carsModalGrade">—</strong>
+                </div>
+
+                <div class="cars-card__modal-complectation">
+                  <span>Комплектация</span>
+                  <strong id="carsModalComplectation">—</strong>
+                </div>
+
+                <div class="cars-card__modal-info">
+                  <div>
+                    <span>Год:</span><strong id="carsModalYear">—</strong>
+                  </div>
+                  <div>
+                    <span>Двигатель:</span
+                    ><strong id="carsModalEngine">—</strong>
+                  </div>
+                  <div>
+                    <span>Пробег:</span><strong id="carsModalMileage">—</strong>
+                  </div>
+                  <div>
+                    <span>Привод:</span><strong id="carsModalDrive">—</strong>
+                  </div>
+                  <div>
+                    <span>Коробка:</span
+                    ><strong id="carsModalGearbox">—</strong>
+                  </div>
+                </div>
+
+                <a
+                  href="#"
+                  class="cars-card__modal-link"
+                  id="carsModalAuction"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Скачать аукционный лист
+                </a>
+
+                <a href="/#form" class="cars-card__modal-btn"
+                  >Оставить заявку</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="/site/scripts/catalog.js"></script>
+  </body>
+</html>

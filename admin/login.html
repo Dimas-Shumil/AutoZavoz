@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Вход в CMS — ShumDev</title>
+    <link rel="stylesheet" href="/site/css/admin.css" />
+  </head>
+
+  <body class="admin-login-page">
+    <main class="admin-login">
+      <section class="admin-login__card">
+        <p class="admin-login__badge">SHUMDEV CMS</p>
+
+        <h1>Вход в панель</h1>
+
+        <p class="admin-login__text">
+          Управление каталогом автомобилей AutoZavoz.
+        </p>
+
+        <form class="admin-login__form" id="adminLoginForm">
+          <label>
+            <span>Email</span>
+            <input
+              type="text"
+              name="email"
+              placeholder="Your login"
+              autocomplete="username"
+              required
+            />
+          </label>
+
+          <label>
+            <span>Пароль</span>
+            <input
+              type="password"
+              name="password"
+              placeholder="Введите пароль"
+              autocomplete="current-password"
+              required
+            />
+          </label>
+
+          <button type="submit" id="adminLoginButton">Войти</button>
+
+          <p class="admin-login__message" id="adminLoginMessage"></p>
+        </form>
+      </section>
+    </main>
+
+    <script src="/admin/js/login.js"></script>
+  </body>
+</html>
