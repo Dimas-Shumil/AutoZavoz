@@ -354,15 +354,15 @@ body.no-scroll {
 
 @font-face {
   font-family: inter;
-  src: url(../fonts/Inter_18pt-Medium.ttf);
+  src: url(/site/fonts/Inter_18pt-Medium.ttf);
 }
 @font-face {
   font-family: oswald;
-  src: url(../fonts/Oswald-Medium.ttf);
+  src: url(/site/fonts/Oswald-Medium.ttf);
 }
 @font-face {
   font-family: russoone;
-  src: url(../fonts/RussoOne-Regular.ttf);
+  src: url(/site/fonts/RussoOne-Regular.ttf);
 }
 .hero {
   position: relative;

@@ -21,6 +21,8 @@ const allowedOrigins = [
   'https://avtozavoz19.ru',
   'https://www.avtozavoz19.ru',
 
+  'http://194.67.102.50',
+
   'http://localhost:3000',
   'http://127.0.0.1:3000',
 
@@ -129,6 +131,8 @@ app.use(
 
         'http://localhost:5500',
         'http://127.0.0.1:5500',
+
+        'http://194.67.102.50',
 
         'https://avtozavoz19.ru',
         'https://www.avtozavoz19.ru',
