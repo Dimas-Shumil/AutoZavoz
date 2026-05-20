@@ -76,7 +76,7 @@ app.use(
       directives: {
         defaultSrc: ["'self'"],
 
-        scriptSrc: ["'self'", 'https://cdn.jsdelivr.net'],
+        scriptSrc: ["'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net'],
 
         styleSrc: ["'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net'],
 
@@ -108,7 +108,7 @@ app.use(
 
         frameAncestors: ["'none'"],
 
-        // upgradeInsecureRequests: [],
+        upgradeInsecureRequests: null,
       },
     },
 
