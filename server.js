@@ -8,7 +8,7 @@ const nodemailer = require('nodemailer');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
-const csrf = require('csurf');
+// const csrf = require('csurf');
 const path = require('path');
 
 const publicCarsRoutes = require('./src/routes/cars.public.routes');
@@ -25,7 +25,7 @@ const allowedOrigins = [
   'http://127.0.0.1:3000',
 
   'http://localhost:5500',
-  'http://127.0.0.1:5500'
+  'http://127.0.0.1:5500',
 ];
 
 app.disable('x-powered-by');
@@ -42,7 +42,7 @@ app.use(
   session({
     store: new SQLiteStore({
       db: 'sessions.sqlite',
-      dir: './prisma'
+      dir: './prisma',
     }),
 
     name: 'shumdev_cms_sid',
@@ -53,50 +53,115 @@ app.use(
     saveUninitialized: false,
 
     cookie: {
+      secure: process.env.NODE_ENV === 'production',
       httpOnly: true,
       sameSite: 'lax',
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 1000 * 60 * 60 * 24
-    }
-  })
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+    },
+  }),
 );
 
-const csrfProtection = csrf();
+// const csrfProtection = csrf();
 
-app.get('/api/admin/csrf-token', csrfProtection, (req, res) => {
-  res.status(200).json({
-    success: true,
-    csrfToken: req.csrfToken()
-  });
-});
+// app.get('/api/admin/csrf-token', csrfProtection, (req, res) => {
+//   res.status(200).json({
+//     success: true,
+//     csrfToken: req.csrfToken()
+//   });
+// });
 
 app.use(
   helmet({
-    contentSecurityPolicy: false,
-    crossOriginEmbedderPolicy: false
-  })
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+
+        scriptSrc: ["'self'", 'https://cdn.jsdelivr.net'],
+
+        styleSrc: ["'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net'],
+
+        imgSrc: [
+          "'self'",
+          'data:',
+          'blob:',
+          'https://*.yandex.net',
+          'https://*.yandex.ru',
+        ],
+
+        fontSrc: ["'self'", 'data:'],
+
+        connectSrc: ["'self'"],
+
+        frameSrc: [
+          "'self'",
+          'https://yandex.ru',
+          'https://yandex.com',
+          'https://yastatic.net',
+          'https://*.yandex.ru',
+        ],
+
+        objectSrc: ["'none'"],
+
+        baseUri: ["'self'"],
+
+        formAction: ["'self'"],
+
+        frameAncestors: ["'none'"],
+
+        // upgradeInsecureRequests: [],
+      },
+    },
+
+    crossOriginEmbedderPolicy: false,
+  }),
 );
 
-app.use(cors({
-  origin(origin, callback) {
-    if (!origin) return callback(null, true);
+app.use(
+  cors({
+    origin(origin, callback) {
+      if (!origin || origin === 'null') {
+        return callback(null, true);
+      }
 
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    }
+      const allowed = [
+        'http://localhost:3000',
+        'http://127.0.0.1:3000',
 
-    return callback(new Error('CORS blocked'));
-  },
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type']
-}));
+        'http://localhost:5500',
+        'http://127.0.0.1:5500',
+
+        'https://avtozavoz19.ru',
+        'https://www.avtozavoz19.ru',
+      ];
+
+      if (allowed.includes(origin)) {
+        return callback(null, true);
+      }
+
+      console.error('Blocked origin:', origin);
+
+      return callback(new Error('CORS blocked'));
+    },
+
+    credentials: true,
+
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+
+    allowedHeaders: ['Content-Type', 'Authorization'],
+  }),
+);
 
 app.use(express.json({ limit: '50kb' }));
 app.use(express.urlencoded({ extended: true, limit: '50kb' }));
 
+app.use((req, res, next) => {
+  res.setTimeout(15000);
+  next();
+});
+
 app.use('/api', publicCarsRoutes);
 app.use('/api', adminAuthRoutes);
-app.use('/api', csrfProtection, adminCarsRoutes);
+app.use('/api', adminCarsRoutes);
 
 app.use(express.static(path.join(__dirname)));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -107,7 +172,7 @@ const requiredEnv = [
   'SMTP_USER',
   'SMTP_PASS',
   'TO_EMAIL',
-  'SESSION_SECRET'
+  'SESSION_SECRET',
 ];
 
 const missingEnv = requiredEnv.filter((key) => !process.env[key]);
@@ -123,8 +188,8 @@ const transporter = nodemailer.createTransport({
   secure: Number(process.env.SMTP_PORT) === 465,
   auth: {
     user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS
-  }
+    pass: process.env.SMTP_PASS,
+  },
 });
 
 const sendLimiter = rateLimit({
@@ -134,8 +199,8 @@ const sendLimiter = rateLimit({
   legacyHeaders: false,
   message: {
     success: false,
-    message: 'Слишком много заявок. Попробуйте чуть позже.'
-  }
+    message: 'Слишком много заявок. Попробуйте чуть позже.',
+  },
 });
 
 const adminLoginLimiter = rateLimit({
@@ -151,26 +216,29 @@ const adminLoginLimiter = rateLimit({
 
 app.use('/api/admin/login', adminLoginLimiter);
 
-
 app.get('/health', (req, res) => {
   res.status(200).json({
     success: true,
-    message: 'AvtoZavoz server is running'
+    message: 'AvtoZavoz server is running',
   });
 });
 
 function checkOrigin(req, res, next) {
   const origin = req.headers.origin;
 
-  if (!origin) return next();
+  if (!origin || origin === 'null') {
+    return next();
+  }
 
   if (allowedOrigins.includes(origin)) {
     return next();
   }
 
+  console.error('Blocked form origin:', origin);
+
   return res.status(403).json({
     success: false,
-    message: 'Access denied'
+    message: 'Access denied',
   });
 }
 
@@ -179,7 +247,7 @@ app.post('/api/send', checkOrigin, sendLimiter, async (req, res) => {
     if (!req.body || typeof req.body !== 'object') {
       return res.status(400).json({
         success: false,
-        message: 'Некорректный запрос.'
+        message: 'Некорректный запрос.',
       });
     }
 
@@ -188,7 +256,7 @@ app.post('/api/send', checkOrigin, sendLimiter, async (req, res) => {
     if (!formTime || Date.now() - formTime < MIN_FORM_TIME_MS) {
       return res.status(400).json({
         success: false,
-        message: 'Попробуйте отправить форму чуть позже.'
+        message: 'Попробуйте отправить форму чуть позже.',
       });
     }
 
@@ -202,7 +270,7 @@ app.post('/api/send', checkOrigin, sendLimiter, async (req, res) => {
     if (company) {
       return res.status(400).json({
         success: false,
-        message: 'Проверка не пройдена.'
+        message: 'Проверка не пройдена.',
       });
     }
 
@@ -211,21 +279,21 @@ app.post('/api/send', checkOrigin, sendLimiter, async (req, res) => {
     if (phoneDigits.length !== 11 || !/^7\d{10}$/.test(phoneDigits)) {
       return res.status(400).json({
         success: false,
-        message: 'Введите корректный номер телефона в формате +7.'
+        message: 'Введите корректный номер телефона в формате +7.',
       });
     }
 
     if (!email || !isValidEmail(email)) {
       return res.status(400).json({
         success: false,
-        message: 'Введите корректный email.'
+        message: 'Введите корректный email.',
       });
     }
 
     if (message.length > 900) {
       return res.status(400).json({
         success: false,
-        message: 'Комментарий слишком длинный. Максимум 900 символов.'
+        message: 'Комментарий слишком длинный. Максимум 900 символов.',
       });
     }
 
@@ -233,7 +301,7 @@ app.post('/api/send', checkOrigin, sendLimiter, async (req, res) => {
     const telLink = makeTelLink(phoneDigits);
 
     const createdAt = new Date().toLocaleString('ru-RU', {
-      timeZone: 'Asia/Krasnoyarsk'
+      timeZone: 'Asia/Krasnoyarsk',
     });
 
     const text = `
@@ -254,7 +322,7 @@ Email: ${email}
       car: car || 'Не указан',
       message: message || '—',
       page: page || '—',
-      createdAt
+      createdAt,
     });
 
     await transporter.sendMail({
@@ -263,19 +331,19 @@ Email: ${email}
       replyTo: email,
       subject: `Заявка АвтоZавоз: ${car || 'расчет автомобиля'}`,
       text,
-      html
+      html,
     });
 
     return res.status(200).json({
       success: true,
-      message: 'Спасибо! Заявка отправлена, мы скоро свяжемся с вами.'
+      message: 'Спасибо! Заявка отправлена, мы скоро свяжемся с вами.',
     });
   } catch (error) {
     console.error('Ошибка отправки заявки:', error);
 
     return res.status(500).json({
       success: false,
-      message: 'Ошибка сервера. Попробуйте ещё раз чуть позже.'
+      message: 'Ошибка сервера. Попробуйте ещё раз чуть позже.',
     });
   }
 });
@@ -347,7 +415,7 @@ function buildEmailTemplate({
   car,
   message,
   page,
-  createdAt
+  createdAt,
 }) {
   return `
 <!DOCTYPE html>
@@ -417,12 +485,12 @@ function buildEmailTemplate({
 
 ${emailRow(
   'Телефон',
-  `<a href="tel:${escapeHtml(telLink)}" style="color:#ffcc00; text-decoration:none;">${escapeHtml(formattedPhone)}</a>`
+  `<a href="tel:${escapeHtml(telLink)}" style="color:#ffcc00; text-decoration:none;">${escapeHtml(formattedPhone)}</a>`,
 )}
 
 ${emailRow(
   'Email',
-  `<a href="mailto:${escapeHtml(email)}" style="color:#ffcc00; text-decoration:none;">${escapeHtml(email)}</a>`
+  `<a href="mailto:${escapeHtml(email)}" style="color:#ffcc00; text-decoration:none;">${escapeHtml(email)}</a>`,
 )}
 
 ${emailRow('Интересующий автомобиль', escapeHtml(car))}

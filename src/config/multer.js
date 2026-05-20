@@ -33,9 +33,26 @@ function fileFilter(req, file, cb) {
     'image/webp'
   ];
 
+  const allowedExtensions = [
+    '.jpg',
+    '.jpeg',
+    '.png',
+    '.webp'
+  ];
+
+  const ext = path
+    .extname(file.originalname)
+    .toLowerCase();
+
   if (!allowedMimeTypes.includes(file.mimetype)) {
     return cb(
       new Error('Разрешены только JPG, PNG и WEBP')
+    );
+  }
+
+  if (!allowedExtensions.includes(ext)) {
+    return cb(
+      new Error('Неверный формат файла')
     );
   }
 

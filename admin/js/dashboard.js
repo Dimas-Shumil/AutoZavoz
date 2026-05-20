@@ -13,7 +13,7 @@ const imagePreview = document.getElementById('imagePreview');
 let carsState = [];
 let currentCarId = null;
 let formMode = 'create';
-let csrfToken = '';
+// let csrfToken = '';
 
 initDashboard();
 
@@ -22,7 +22,7 @@ async function initDashboard() {
 
   if (!isAuthorized) return;
 
-  await loadCsrfToken();
+  // await loadCsrfToken();
   await loadCars();
 }
 
@@ -252,9 +252,9 @@ carsTableBody?.addEventListener('click', async (event) => {
       const response = await fetch(`/api/admin/cars/${carId}`, {
         method: 'DELETE',
         credentials: 'same-origin',
-        headers: {
-          'CSRF-Token': csrfToken,
-        },
+        // headers: {
+        //   'CSRF-Token': csrfToken,
+        // },
       });
 
       const data = await response.json();
@@ -389,9 +389,9 @@ carForm?.addEventListener('submit', async (event) => {
     const response = await fetch(url, {
       method,
       credentials: 'same-origin',
-      headers: {
-        'CSRF-Token': csrfToken,
-      },
+      // headers: {
+      //   'CSRF-Token': csrfToken,
+      // },
       body: formData,
     });
 
@@ -506,22 +506,22 @@ document.querySelectorAll('[data-upload-zone]').forEach((zone) => {
   });
 });
 
-async function loadCsrfToken() {
-  try {
-    const response = await fetch('/api/admin/csrf-token', {
-      method: 'GET',
-      credentials: 'same-origin',
-    });
+// async function loadCsrfToken() {
+//   try {
+//     const response = await fetch('/api/admin/csrf-token', {
+//       method: 'GET',
+//       credentials: 'same-origin',
+//     });
 
-    const data = await response.json();
+//     const data = await response.json();
 
-    if (!response.ok || !data.success || !data.csrfToken) {
-      throw new Error('Не удалось получить CSRF token');
-    }
+//     if (!response.ok || !data.success || !data.csrfToken) {
+//       throw new Error('Не удалось получить CSRF token');
+//     }
 
-    csrfToken = data.csrfToken;
-  } catch (error) {
-    console.error('CSRF token error:', error);
-    showToast('Ошибка безопасности. Обновите страницу.', 'error');
-  }
-}
+//     csrfToken = data.csrfToken;
+//   } catch (error) {
+//     console.error('CSRF token error:', error);
+//     showToast('Ошибка безопасности. Обновите страницу.', 'error');
+//   }
+// }

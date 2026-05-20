@@ -80,7 +80,7 @@ router.post(
 
       const car = await prisma.car.create({
         data: {
-          title: req.body.title || '',
+          title: String(req.body.title || '').trim(),
           slug:
             (req.body.title || '')
               .toLowerCase()
@@ -198,7 +198,7 @@ router.put(
           id: carId
         },
         data: {
-          title: req.body.title || '',
+          title: String(req.body.title || '').trim(),
           price: req.body.price || '',
           year: req.body.year || '',
           engine: req.body.engine || '',
