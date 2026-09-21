@@ -7,24 +7,45 @@
     <link rel="stylesheet" href="/site/css/admin.css" />
   </head>
 
-  <body class="admin-login-page">
-    <main class="admin-login">
-      <section class="admin-login__card">
-        <p class="admin-login__badge">SHUMDEV CMS</p>
+ <body class="admin-login-page">
+  <main class="admin-login">
+    <section class="admin-login__visual" aria-label="АвтоZавоз">
+      <a
+        href="/"
+        class="admin-login__brand"
+        aria-label="Вернуться на сайт АвтоZавоз"
+      >
+        <img src="/site/img/Logo.png" alt="АвтоZавоз" />
+      </a>
+
+      <div class="admin-login__visual-content">
+        <span>АВТОZАВОЗ19</span>
+
+        <p>
+          Автомобили из Японии, Кореи,<br />
+          Китая и ОАЭ
+        </p>
+      </div>
+    </section>
+
+    <section class="admin-login__content">
+      <div class="admin-login__inner">
+        <p class="admin-login__badge">SHUMDEV CUSTOM CMS</p>
 
         <h1>Вход в панель</h1>
 
         <p class="admin-login__text">
-          Управление каталогом автомобилей AutoZavoz.
+          Управление каталогом автомобилей и заявками АвтоZавоз19.
         </p>
 
         <form class="admin-login__form" id="adminLoginForm">
           <label>
             <span>Email</span>
+
             <input
-              type="text"
+              type="email"
               name="email"
-              placeholder="Your login"
+              placeholder="Введите email"
               autocomplete="username"
               required
             />
@@ -32,22 +53,51 @@
 
           <label>
             <span>Пароль</span>
-            <input
-              type="password"
-              name="password"
-              placeholder="Введите пароль"
-              autocomplete="current-password"
-              required
-            />
+
+            <div class="admin-login__password">
+              <input
+                type="password"
+                name="password"
+                id="adminLoginPassword"
+                placeholder="Введите пароль"
+                autocomplete="current-password"
+                required
+              />
+
+              <button
+                type="button"
+                class="admin-login__password-toggle"
+                id="adminPasswordToggle"
+                aria-label="Показать пароль"
+              >
+                Показать
+              </button>
+            </div>
           </label>
 
-          <button type="submit" id="adminLoginButton">Войти</button>
+          <button
+            type="submit"
+            class="admin-login__submit"
+            id="adminLoginButton"
+          >
+            Войти
+          </button>
 
           <p class="admin-login__message" id="adminLoginMessage"></p>
         </form>
-      </section>
-    </main>
 
-    <script src="/admin/js/login.js"></script>
-  </body>
+        <div class="admin-login__access">
+          <span aria-hidden="true"></span>
+          Доступ разрешён только администратору АвтоZавоз19.
+        </div>
+
+        <a href="/" class="admin-login__back">
+          Вернуться на сайт
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <script src="/admin/js/login.js"></script>
+</body>
 </html>

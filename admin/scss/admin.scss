@@ -64,145 +64,340 @@ img {
 }
 
 .admin-login-page {
-  display: grid;
-  place-items: center;
   min-height: 100vh;
-  padding: 24px;
+  margin: 0;
+  padding: 0;
+  background: #f5f4f1;
+  color: #151515;
 }
 
 .admin-login {
   width: 100%;
-  max-width: 480px;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(520px, 0.92fr);
 
-  &__card {
+  &__visual {
     position: relative;
+    min-height: 100vh;
     overflow: hidden;
-    padding: 42px;
-    border: 1px solid $border-main;
-    border-radius: 24px;
     background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02)),
-      $black-card;
-    box-shadow: 0 30px 90px rgba(0, 0, 0, 0.45);
+      linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.18) 0%,
+        rgba(0, 0, 0, 0.06) 42%,
+        rgba(0, 0, 0, 0.72) 100%
+      ),
+      url('/site/img//login.webp') center center / cover no-repeat;
 
-    &::before {
+    &::after {
       content: '';
       position: absolute;
-      top: -120px;
-      right: -120px;
-      width: 260px;
-      height: 260px;
-      border-radius: 50%;
-      background: rgba(255, 106, 0, 0.18);
-      filter: blur(18px);
+      inset: 0;
       pointer-events: none;
+      background:
+        radial-gradient(
+          circle at 75% 58%,
+          rgba(255, 106, 0, 0.13),
+          transparent 36%
+        ),
+        linear-gradient(
+          90deg,
+          rgba(0, 0, 0, 0.12),
+          transparent 55%
+        );
     }
   }
 
+  &__brand {
+    position: absolute;
+    z-index: 2;
+    top: 38px;
+    left: 42px;
+    display: block;
+    width: 190px;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  &__visual-content {
+    position: absolute;
+    z-index: 2;
+    left: 42px;
+    bottom: 44px;
+
+    span {
+      display: block;
+      margin-bottom: 10px;
+      color: $orange-light;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    p {
+      margin: 0;
+      color: #ffffff;
+      font-size: 17px;
+      line-height: 1.55;
+      font-weight: 500;
+    }
+  }
+
+  &__content {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 64px clamp(44px, 6vw, 110px);
+    background: #f5f4f1;
+  }
+
+  &__inner {
+    width: 100%;
+    max-width: 510px;
+  }
+
   &__badge {
-    position: relative;
-    z-index: 1;
-    margin: 0 0 14px;
-    color: $orange-light;
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: 0.16em;
+    margin: 0 0 18px;
+    color: $orange-dark;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
   }
 
   h1 {
-    position: relative;
-    z-index: 1;
-    margin: 0 0 12px;
-    font-size: 38px;
-    line-height: 1.05;
-    text-transform: uppercase;
+    margin: 0;
+    color: #151515;
+    font-size: clamp(46px, 4.4vw, 70px);
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+    text-transform: none;
   }
 
   &__text {
-    position: relative;
-    z-index: 1;
-    margin: 0 0 30px;
-    color: $white-muted;
-    line-height: 1.6;
+    max-width: 430px;
+    margin: 24px 0 42px;
+    color: rgba(21, 21, 21, 0.58);
+    font-size: 14px;
+    line-height: 1.65;
   }
 
   &__form {
-    position: relative;
-    z-index: 1;
     display: grid;
-    gap: 18px;
+    gap: 22px;
 
     label {
       display: grid;
-      gap: 8px;
+      gap: 9px;
 
-      span {
-        color: $white-muted;
-        font-size: 14px;
-        font-weight: 700;
+      > span {
+        color: #181818;
+        font-size: 13px;
+        font-weight: 800;
       }
     }
 
     input {
       width: 100%;
-      height: 52px;
-      padding: 0 16px;
-      border: 1px solid $border-main;
-      border-radius: 12px;
+      height: 58px;
+      padding: 0 17px;
+      border: 1px solid rgba(0, 0, 0, 0.13);
+      border-radius: 13px;
       outline: none;
-      background: rgba(0, 0, 0, 0.28);
-      color: $white-main;
+      background: #ffffff;
+      color: #151515;
+      font-size: 14px;
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
       transition:
-        border-color 0.2s ease,
-        box-shadow 0.2s ease,
-        background 0.2s ease;
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
 
       &::placeholder {
-        color: $white-soft;
+        color: rgba(21, 21, 21, 0.34);
       }
 
       &:focus {
         border-color: $orange-main;
-        background: rgba(0, 0, 0, 0.42);
-        box-shadow: 0 0 0 4px rgba(255, 106, 0, 0.12);
+        box-shadow: 0 0 0 4px rgba(255, 106, 0, 0.1);
       }
     }
+  }
 
-    button {
-      height: 54px;
-      margin-top: 4px;
-      border: 0;
-      border-radius: 12px;
-      background: linear-gradient(180deg, $orange-light 0%, $orange-main 100%);
-      color: #ffffff;
-      font-weight: 900;
-      text-transform: uppercase;
-      box-shadow: 0 16px 36px rgba(255, 106, 0, 0.22);
-      transition:
-        transform 0.2s ease,
-        opacity 0.2s ease,
-        box-shadow 0.2s ease;
+  &__password {
+    position: relative;
 
-      &:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 20px 44px rgba(255, 106, 0, 0.28);
-      }
+    input {
+      padding-right: 100px;
+    }
+  }
 
-      &:disabled {
-        cursor: not-allowed;
-        opacity: 0.65;
-        transform: none;
-      }
+  &__password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 16px;
+    transform: translateY(-50%);
+    padding: 6px 0;
+    border: 0;
+    background: transparent;
+    color: $orange-dark;
+    font-size: 12px;
+    font-weight: 800;
+    cursor: pointer;
+  }
+
+  &__submit {
+    width: 100%;
+    height: 58px;
+    margin-top: 3px;
+    border: 0;
+    border-radius: 13px;
+    background: linear-gradient(
+      180deg,
+      $orange-light 0%,
+      $orange-main 100%
+    );
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 900;
+    text-transform: uppercase;
+    box-shadow:
+      0 16px 34px rgba(255, 106, 0, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.24);
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease,
+      opacity 0.25s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 20px 42px rgba(255, 106, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.65;
+      transform: none;
     }
   }
 
   &__message {
     min-height: 20px;
-    margin: 0;
+    margin: -6px 0 0;
     color: $danger;
-    font-size: 14px;
-    line-height: 1.4;
+    font-size: 13px;
+    line-height: 1.45;
+  }
+
+  &__access {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+    color: rgba(21, 21, 21, 0.45);
+    font-size: 11px;
+    line-height: 1.45;
+
+    span {
+      flex: 0 0 auto;
+      width: 7px;
+      height: 7px;
+      border: 1.5px solid $orange-main;
+      transform: rotate(45deg);
+    }
+  }
+
+  &__back {
+    display: inline-block;
+    margin-top: 38px;
+    color: rgba(21, 21, 21, 0.56);
+    font-size: 12px;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $orange-main;
+    }
+  }
+}
+
+@media (max-width: 980px) {
+  .admin-login {
+    grid-template-columns: 1fr;
+
+    &__visual {
+      min-height: 34vh;
+      height: 340px;
+      background-position: center 58%;
+    }
+
+    &__content {
+      min-height: auto;
+      padding: 60px 32px 70px;
+    }
+
+    &__brand {
+      top: 28px;
+      left: 28px;
+      width: 160px;
+    }
+
+    &__visual-content {
+      left: 28px;
+      bottom: 28px;
+    }
+  }
+}
+
+@media (max-width: 560px) {
+  .admin-login {
+    &__visual {
+      height: 250px;
+      min-height: 250px;
+    }
+
+    &__brand {
+      top: 22px;
+      left: 20px;
+      width: 135px;
+    }
+
+    &__visual-content {
+      left: 20px;
+      right: 20px;
+      bottom: 20px;
+
+      p {
+        font-size: 14px;
+      }
+    }
+
+    &__content {
+      padding: 42px 20px 56px;
+    }
+
+    h1 {
+      font-size: 44px;
+    }
+
+    &__text {
+      margin: 18px 0 32px;
+    }
+
+    &__form {
+      gap: 18px;
+    }
   }
 }
 
@@ -741,13 +936,6 @@ img {
 }
 
 @media (max-width: 560px) {
-  .admin-login__card {
-    padding: 28px 20px;
-  }
-
-  .admin-login h1 {
-    font-size: 30px;
-  }
 
   .admin-sidebar__nav {
     grid-template-columns: 1fr;

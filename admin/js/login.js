@@ -2,6 +2,26 @@ const form = document.getElementById('adminLoginForm');
 const button = document.getElementById('adminLoginButton');
 const message = document.getElementById('adminLoginMessage');
 
+const passwordInput = document.getElementById('adminLoginPassword');
+const passwordToggle = document.getElementById('adminPasswordToggle');
+
+passwordToggle?.addEventListener('click', () => {
+  if (!passwordInput) return;
+
+  const isPasswordVisible = passwordInput.type === 'text';
+
+  passwordInput.type = isPasswordVisible ? 'password' : 'text';
+
+  passwordToggle.textContent = isPasswordVisible
+    ? 'Показать'
+    : 'Скрыть';
+
+  passwordToggle.setAttribute(
+    'aria-label',
+    isPasswordVisible ? 'Показать пароль' : 'Скрыть пароль',
+  );
+});
+
 checkAuth();
 
 async function checkAuth() {
