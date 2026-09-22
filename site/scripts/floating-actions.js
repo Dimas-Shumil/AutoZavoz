@@ -21,7 +21,33 @@ actions.innerHTML = `
     aria-label="Написать в MAX АвтоЗавоз19"
     title="Написать в MAX"
   >
-    <img src="/site/img/MAX.svg" alt="" aria-hidden="true" />
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path
+            d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+          <rect
+            x="9"
+            y="3"
+            width="6"
+            height="4"
+            rx="1"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+          />
+          <path
+            d="M9 12h6M9 16h4"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+          />
+        </svg>
   </a>
 
   <a

@@ -309,8 +309,8 @@ body {
 }
 .floating-actions {
   position: fixed;
-  right: 12px;
-  bottom: calc(12px + env(safe-area-inset-bottom));
+  right: 20px;
+  bottom: calc(20px + env(safe-area-inset-bottom));
   z-index: 1350;
   display: none;
   flex-direction: column;
@@ -341,6 +341,17 @@ body {
 }
 .floating-actions__button:active {
   transform: scale(0.95);
+}
+.floating-actions__button--primary {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: linear-gradient(180deg, rgba(255, 138, 36, 0.6156862745) 0%, #ff6a00 100%);
+  box-shadow: 0 10px 24px rgba(255, 106, 0, 0.26), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+.floating-actions__button--primary svg {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  display: block;
 }
 .floating-actions__button--glass {
   border: 1px solid rgba(255, 255, 255, 0.22);

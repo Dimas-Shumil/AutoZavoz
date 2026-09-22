@@ -408,8 +408,8 @@ body {
 
 .floating-actions {
   position: fixed;
-  right: 12px;
-  bottom: calc(12px + env(safe-area-inset-bottom));
+  right: 20px;
+  bottom: calc(20px + env(safe-area-inset-bottom));
   z-index: 1350;
 
   display: none;
@@ -457,26 +457,26 @@ body {
     }
   }
 
-  // &__button--primary {
-  //   border: 1px solid rgba(255, 255, 255, 0.14);
+  &__button--primary {
+    border: 1px solid rgba(255, 255, 255, 0.14);
 
-  //   background: linear-gradient(
-  //     180deg,
-  //     #ff8a24 0%,
-  //     #ff6a00 100%
-  //   );
+    background: linear-gradient(
+      180deg,
+      #ff8a249d 0%,
+      #ff6a00 100%
+    );
 
-  //   box-shadow:
-  //     0 10px 24px rgba(255, 106, 0, 0.26),
-  //     inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    box-shadow:
+      0 10px 24px rgba(255, 106, 0, 0.26),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18);
 
-  //   img {
-  //     width: 42px;
-  //     height: 42px;
-  //     object-fit: contain;
-  //     display: block;
-  //   }
-  // }
+    svg {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+      display: block;
+    }
+  }
 
   &__button--glass {
     border: 1px solid rgba(255, 255, 255, 0.22);
