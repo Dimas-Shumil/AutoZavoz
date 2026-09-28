@@ -5,6 +5,9 @@ const mobileLinks = document.querySelectorAll('.mobile-menu a');
 const header = document.querySelector('.header');
 const carDetail = document.querySelector('#carDetail');
 
+let currentGalleryImages = [];
+let currentGalleryIndex = 0;
+
 if (burger && mobileMenu && overlay) {
   burger.addEventListener('click', () => {
     burger.classList.toggle('active');
@@ -73,6 +76,9 @@ function renderCar(car, similarCars = []) {
   const galleryImages = getGalleryImages(car);
   const mainImage = galleryImages[0]?.image || '/site/img/logoIcon.png';
 
+  currentGalleryImages = galleryImages;
+  currentGalleryIndex = 0;
+
   document.title = car.seoTitle || `${car.title || 'Автомобиль'} — АвтоZавоз`;
 
   const seoDescription =
@@ -111,24 +117,47 @@ function renderCar(car, similarCars = []) {
       <div class="car-detail__layout">
         <div class="car-detail__content">
           <section class="car-gallery">
-            <div class="car-gallery__main">
-              <img
-                id="carGalleryMainImage"
-                src="${escapeHtml(mainImage)}"
-                alt="${title}"
-              />
+            <div class="car-gallery__stage">
+              <div class="car-gallery__main">
+                <img
+                  id="carGalleryMainImage"
+                  src="${escapeHtml(mainImage)}"
+                  alt="${title}"
+                  draggable="false"
+                />
 
-              ${
-                car.badge
-                  ? `<span class="car-gallery__badge">${escapeHtml(car.badge)}</span>`
-                  : ''
-              }
+                ${
+                  car.badge
+                    ? `<span class="car-gallery__badge">${escapeHtml(car.badge)}</span>`
+                    : ''
+                }
 
-              ${
-                galleryImages.length
-                  ? `<span class="car-gallery__count">${galleryImages.length} фото</span>`
-                  : ''
-              }
+                ${
+                  galleryImages.length
+                    ? `<span class="car-gallery__count" id="carGalleryCount">1 / ${galleryImages.length}</span>`
+                    : ''
+                }
+              </div>
+
+              <button
+                class="car-gallery__arrow car-gallery__arrow--prev"
+                type="button"
+                aria-label="Предыдущее изображение"
+                data-gallery-prev
+                ${galleryImages.length > 1 ? '' : 'hidden'}
+              >
+                ‹
+              </button>
+
+              <button
+                class="car-gallery__arrow car-gallery__arrow--next"
+                type="button"
+                aria-label="Следующее изображение"
+                data-gallery-next
+                ${galleryImages.length > 1 ? '' : 'hidden'}
+              >
+                ›
+              </button>
             </div>
 
             ${createGalleryThumbs(galleryImages)}
@@ -314,7 +343,7 @@ function renderCar(car, similarCars = []) {
     </div>
   `;
 
-  bindGalleryThumbs();
+  bindCarGallery();
   bindCarLeadForm();
 }
 
@@ -368,19 +397,22 @@ function createGalleryThumbs(images) {
   if (images.length <= 1) return '';
 
   return `
-    <div class="car-gallery__thumbs">
+    <div class="car-gallery__thumbs" aria-label="Фотографии автомобиля">
       ${images
         .map((item, index) => {
           return `
             <button
               class="car-gallery__thumb ${index === 0 ? 'active' : ''}"
               type="button"
-              data-gallery-image="${escapeHtml(item.image)}"
+              data-gallery-index="${index}"
               aria-label="Показать фото ${index + 1}"
+              aria-current="${index === 0 ? 'true' : 'false'}"
             >
               <img
                 src="${escapeHtml(item.image)}"
                 alt="${escapeHtml(item.alt || `Фото ${index + 1}`)}"
+                loading="lazy"
+                draggable="false"
               />
             </button>
           `;
@@ -390,27 +422,128 @@ function createGalleryThumbs(images) {
   `;
 }
 
-function bindGalleryThumbs() {
-  const mainImage = document.querySelector('#carGalleryMainImage');
-  const thumbs = document.querySelectorAll('[data-gallery-image]');
+function normalizeGalleryIndex(index) {
+  if (!currentGalleryImages.length) return 0;
 
-  if (!mainImage || !thumbs.length) return;
+  return (
+    (index % currentGalleryImages.length) + currentGalleryImages.length
+  ) % currentGalleryImages.length;
+}
+
+function showGalleryImage(index) {
+  if (!currentGalleryImages.length) return;
+
+  const mainImage = document.querySelector('#carGalleryMainImage');
+  const count = document.querySelector('#carGalleryCount');
+  const thumbs = document.querySelectorAll('[data-gallery-index]');
+
+  if (!mainImage) return;
+
+  currentGalleryIndex = normalizeGalleryIndex(index);
+
+  const image = currentGalleryImages[currentGalleryIndex];
+
+  mainImage.src = image.image;
+  mainImage.alt = image.alt || `Фото ${currentGalleryIndex + 1}`;
+
+  if (count) {
+    count.textContent = `${currentGalleryIndex + 1} / ${currentGalleryImages.length}`;
+  }
+
+  thumbs.forEach((thumb) => {
+    const isActive = Number(thumb.dataset.galleryIndex) === currentGalleryIndex;
+
+    thumb.classList.toggle('active', isActive);
+    thumb.setAttribute('aria-current', isActive ? 'true' : 'false');
+
+    if (isActive) {
+      thumb.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'center',
+      });
+    }
+  });
+}
+
+function bindCarGallery() {
+  const galleryMain = document.querySelector('.car-gallery__main');
+  const previousButton = document.querySelector('[data-gallery-prev]');
+  const nextButton = document.querySelector('[data-gallery-next]');
+  const thumbs = document.querySelectorAll('[data-gallery-index]');
+
+  if (!galleryMain) return;
+
+  previousButton?.addEventListener('click', () => {
+    showGalleryImage(currentGalleryIndex - 1);
+  });
+
+  nextButton?.addEventListener('click', () => {
+    showGalleryImage(currentGalleryIndex + 1);
+  });
 
   thumbs.forEach((thumb) => {
     thumb.addEventListener('click', () => {
-      const image = thumb.dataset.galleryImage;
-
-      if (!image) return;
-
-      mainImage.src = image;
-
-      thumbs.forEach((item) => {
-        item.classList.remove('active');
-      });
-
-      thumb.classList.add('active');
+      showGalleryImage(Number(thumb.dataset.galleryIndex));
     });
   });
+
+  let swipeStartX = null;
+  let swipeStartY = null;
+
+  galleryMain.addEventListener(
+    'touchstart',
+    (event) => {
+      if (event.touches.length !== 1 || currentGalleryImages.length <= 1) {
+        return;
+      }
+
+      const touch = event.touches[0];
+
+      swipeStartX = touch.clientX;
+      swipeStartY = touch.clientY;
+    },
+    { passive: true },
+  );
+
+  galleryMain.addEventListener(
+    'touchend',
+    (event) => {
+      if (
+        swipeStartX === null ||
+        swipeStartY === null ||
+        !window.matchMedia('(max-width: 760px)').matches
+      ) {
+        swipeStartX = null;
+        swipeStartY = null;
+        return;
+      }
+
+      const touch = event.changedTouches[0];
+      const deltaX = touch.clientX - swipeStartX;
+      const deltaY = touch.clientY - swipeStartY;
+
+      swipeStartX = null;
+      swipeStartY = null;
+
+      const minimumSwipeDistance = 45;
+
+      if (
+        Math.abs(deltaX) < minimumSwipeDistance ||
+        Math.abs(deltaX) <= Math.abs(deltaY)
+      ) {
+        return;
+      }
+
+      if (deltaX < 0) {
+        showGalleryImage(currentGalleryIndex + 1);
+        return;
+      }
+
+      showGalleryImage(currentGalleryIndex - 1);
+    },
+    { passive: true },
+  );
 }
 
 function createMetaItem(value) {
