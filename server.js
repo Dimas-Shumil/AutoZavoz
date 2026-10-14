@@ -16,7 +16,12 @@ const publicCarsRoutes = require('./src/routes/cars.public.routes');
 const adminCarsRoutes = require('./src/routes/cars.admin.routes');
 const leadsRoutes = require('./src/routes/leads.routes');
 const pushRoutes = require('./src/routes/push.routes');
-const { notifyAboutNewLead } = require('./src/services/push.service');
+const push = require('./src/services/push.service');
+const { createLead } = require('./src/services/leads.service');
+const {
+  createDeliveryWorker,
+} = require('./src/services/push-delivery.service');
+const pushWorker = createDeliveryWorker({ prisma, push });
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
 const MIN_FORM_TIME_MS = 2000;
@@ -44,13 +49,14 @@ app.use((req, res, next) => {
 
 app.set('trust proxy', 1);
 
+const sessionStore = new PrismaSessionStore(prisma, {
+  checkPeriod: 2 * 60 * 1000,
+  dbRecordIdIsSessionId: true,
+});
+
 app.use(
   session({
-    store: new PrismaSessionStore(prisma, {
-      checkPeriod: 2 * 60 * 1000,
-      dbRecordIdIsSessionId: true,
-      dbRecordIdFunction: undefined,
-    }),
+    store: sessionStore,
 
     name: 'shumdev_cms_sid',
 
@@ -149,7 +155,9 @@ app.use(
 
       console.error('Blocked origin:', origin);
 
-      return callback(new Error('CORS blocked'));
+      const error = new Error('Access denied');
+      error.status = 403;
+      return callback(error);
     },
 
     credentials: true,
@@ -172,6 +180,19 @@ app.use((req, res, next) => {
   next();
 });
 
+const adminLoginLimiter = rateLimit({
+  windowMs: 10 * 60 * 1000,
+  max: 5,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: {
+    success: false,
+    message: 'Слишком много попыток входа. Попробуйте позже.',
+  },
+});
+
+app.use('/api/admin/login', adminLoginLimiter);
+
 app.use('/api', publicCarsRoutes);
 app.use('/api', adminAuthRoutes);
 app.use('/api', adminCarsRoutes);
@@ -185,12 +206,18 @@ function requireAdminPage(req, res, next) {
     return next();
   }
 
-  return res.redirect('/admin/login.html');
+  return res.redirect(
+    '/admin/login.html?next=' + encodeURIComponent(req.originalUrl),
+  );
 }
 
 function redirectLoggedAdmin(req, res, next) {
   if (req.session && req.session.admin) {
-    return res.redirect('/admin/cars.html');
+    const requested = typeof req.query.next === 'string' ? req.query.next : '';
+    const safe = /^\/admin\/(?:cars|leads|car-edit)\.html(?:\?[^#]*)?$/.test(
+      requested,
+    );
+    return res.redirect(safe ? requested : '/admin/cars.html');
   }
 
   return next();
@@ -282,19 +309,6 @@ const sendLimiter = rateLimit({
     message: 'Слишком много заявок. Попробуйте чуть позже.',
   },
 });
-
-const adminLoginLimiter = rateLimit({
-  windowMs: 10 * 60 * 1000,
-  max: 5,
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: {
-    success: false,
-    message: 'Слишком много попыток входа. Попробуйте позже.',
-  },
-});
-
-app.use('/api/admin/login', adminLoginLimiter);
 
 app.get('/health', (req, res) => {
   res.status(200).json({
@@ -392,33 +406,29 @@ app.post('/api/send', checkOrigin, sendLimiter, async (req, res) => {
       timeZone: 'Asia/Krasnoyarsk',
     });
 
-    const lead = await prisma.lead.create({
-      data: {
-        leadType: 'general',
-        source: 'main_form',
+    const lead = await createLead({
+      leadType: 'general',
+      source: 'main_form',
 
-        customerName: name,
-        phone: formattedPhone,
-        messenger: email ? `Email: ${email}` : null,
-        city: null,
-        budget: null,
+      customerName: name,
+      phone: formattedPhone,
+      messenger: email ? `Email: ${email}` : null,
+      city: null,
+      budget: null,
 
-        message: [
-          car ? `Автомобиль: ${car}` : null,
-          message ? `Комментарий: ${message}` : null,
-          page ? `Страница: ${page}` : null,
-        ]
-          .filter(Boolean)
-          .join('\n'),
+      message: [
+        car ? `Автомобиль: ${car}` : null,
+        message ? `Комментарий: ${message}` : null,
+        page ? `Страница: ${page}` : null,
+      ]
+        .filter(Boolean)
+        .join('\n'),
 
-        carTitleSnapshot: car || null,
-        carSlugSnapshot: null,
+      carTitleSnapshot: car || null,
+      carSlugSnapshot: null,
 
-        status: 'new',
-      },
+      status: 'new',
     });
-
-    void notifyAboutNewLead(lead);
 
     const text = `
 Новая заявка с сайта АвтоZавоз
@@ -443,14 +453,28 @@ Email: ${email}
       createdAt,
     });
 
-    await transporter.sendMail({
-      from: `"АвтоZавоз сайт" <${process.env.SMTP_USER}>`,
-      to: process.env.TO_EMAIL,
-      replyTo: email,
-      subject: `Заявка АвтоZавоз: ${car || 'расчет автомобиля'}`,
-      text,
-      html,
-    });
+    try {
+      void transporter
+        .sendMail({
+          from: `"АвтоZавоз сайт" <${process.env.SMTP_USER}>`,
+          to: process.env.TO_EMAIL,
+          replyTo: email,
+          subject: `Заявка АвтоZавоз: ${car || 'расчет автомобиля'}`,
+          text,
+          html,
+        })
+        .catch((mailError) => {
+          console.error('Lead email delivery failed:', {
+            leadId: lead.id,
+            code: mailError.code || 'smtp',
+          });
+        });
+    } catch (mailError) {
+      console.error('Lead email delivery failed:', {
+        leadId: lead.id,
+        code: mailError.code || 'smtp',
+      });
+    }
 
     return res.status(200).json({
       success: true,
@@ -466,21 +490,32 @@ Email: ${email}
   }
 });
 
+app.use((error, _req, res, _next) => {
+  const status = error.status || 500;
+  res.status(status).json({
+    success: false,
+    message: status < 500 ? error.message : 'Ошибка сервера.',
+  });
+});
+
 app.use((req, res) => {
   res.status(404).sendFile(path.join(__dirname, 'index.html'));
 });
 
-transporter.verify((error) => {
-  if (error) {
-    console.error('Ошибка подключения к SMTP:', error);
-  } else {
-    console.log('SMTP готов к отправке писем');
-  }
-});
-
-app.listen(PORT, () => {
-  console.log(`AvtoZavoz server started: http://localhost:${PORT}`);
-});
+let server;
+function startServer(port = PORT) {
+  transporter.verify((error) => {
+    console.log(error ? 'SMTP недоступен' : 'SMTP готов к отправке писем');
+  });
+  server = app.listen(port, () => {
+    pushWorker.start();
+    console.log(`AvtoZavoz: http://localhost:${port}`);
+    console.log(`Админка: http://localhost:${port}`);
+  });
+  return server;
+}
+if (require.main === module) startServer();
+module.exports = { app, startServer, sessionStore };
 
 function cleanText(value, maxLength = 500) {
   return String(value || '')
@@ -669,3 +704,15 @@ ${emailRow('Дата заявки', escapeHtml(createdAt))}
 </html>
 `;
 }
+
+function shutdown() {
+  pushWorker.stop();
+  sessionStore.stopInterval();
+  if (!server) return;
+  server.close(() => {
+    void prisma.$disconnect().then(() => process.exit(0));
+  });
+  setTimeout(() => process.exit(0), 15000).unref();
+}
+process.once('SIGTERM', shutdown);
+process.once('SIGINT', shutdown);

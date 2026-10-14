@@ -1,28 +1,30 @@
 const Admin = (() => {
   function redirectToLogin() {
-    window.location.href = '/admin/login.html';
+    window.location.href =
+      "/admin/login.html?next=" +
+      encodeURIComponent(location.pathname + location.search);
   }
 
   function escapeHTML(value) {
-    return String(value ?? '')
-      .replaceAll('&', '&amp;')
-      .replaceAll('<', '&lt;')
-      .replaceAll('>', '&gt;')
-      .replaceAll('"', '&quot;')
-      .replaceAll("'", '&#039;');
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
   }
 
   function formatDate(value) {
     if (!value) {
-      return '—';
+      return "—";
     }
 
-    return new Date(value).toLocaleString('ru-RU', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
+    return new Date(value).toLocaleString("ru-RU", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
   }
 
@@ -32,8 +34,8 @@ const Admin = (() => {
     };
 
     const config = {
-      method: options.method || 'GET',
-      credentials: 'same-origin',
+      method: options.method || "GET",
+      credentials: "same-origin",
       headers,
     };
 
@@ -43,7 +45,7 @@ const Admin = (() => {
       if (isFormData) {
         config.body = options.body;
       } else {
-        headers['Content-Type'] = 'application/json';
+        headers["Content-Type"] = "application/json";
         config.body = JSON.stringify(options.body);
       }
     }
@@ -54,7 +56,7 @@ const Admin = (() => {
       response = await fetch(url, config);
     } catch (error) {
       const requestError = new Error(
-        'Сервер не ответил. Проверьте интернет и попробуйте ещё раз.',
+        "Сервер не ответил. Проверьте интернет и попробуйте ещё раз.",
       );
 
       requestError.cause = error;
@@ -79,11 +81,11 @@ const Admin = (() => {
 
     if (!response.ok) {
       const fallbackMessages = {
-        413: 'Фотографии слишком большие для загрузки.',
-        429: 'Слишком много запросов. Подождите минуту и повторите.',
-        502: 'Сервер временно недоступен. Попробуйте ещё раз.',
-        503: 'Сервер временно недоступен. Попробуйте ещё раз.',
-        504: 'Обработка фотографий заняла слишком много времени.',
+        413: "Фотографии слишком большие для загрузки.",
+        429: "Слишком много запросов. Подождите минуту и повторите.",
+        502: "Сервер временно недоступен. Попробуйте ещё раз.",
+        503: "Сервер временно недоступен. Попробуйте ещё раз.",
+        504: "Обработка фотографий заняла слишком много времени.",
       };
 
       const requestError = new Error(
@@ -103,36 +105,35 @@ const Admin = (() => {
   }
 
   async function checkAuth() {
-    return request('/api/admin/me');
+    return request("/api/admin/me");
   }
 
   function setActiveNav() {
     const currentPath = window.location.pathname;
     const links = document.querySelectorAll(
-      '[data-admin-nav], [data-admin-mobile-nav]',
+      "[data-admin-nav], [data-admin-mobile-nav]",
     );
 
     links.forEach((link) => {
-      const href = link.getAttribute('href');
+      const href = link.getAttribute("href");
       const isCarList =
-        href === '/admin/cars.html' &&
-        (currentPath === '/admin/cars.html' ||
-          (currentPath === '/admin/car-edit.html' &&
-            !link.matches('[data-admin-mobile-nav]')));
+        href === "/admin/cars.html" &&
+        (currentPath === "/admin/cars.html" ||
+          (currentPath === "/admin/car-edit.html" &&
+            !link.matches("[data-admin-mobile-nav]")));
 
       if (href === currentPath || isCarList) {
-        link.classList.add('active');
+        link.classList.add("active");
       }
     });
   }
 
-
   function createMobileNav() {
-    if (document.querySelector('.admin-mobile-nav')) return;
+    if (document.querySelector(".admin-mobile-nav")) return;
 
-    const nav = document.createElement('nav');
-    nav.className = 'admin-mobile-nav';
-    nav.setAttribute('aria-label', 'Навигация админки');
+    const nav = document.createElement("nav");
+    nav.className = "admin-mobile-nav";
+    nav.setAttribute("aria-label", "Навигация админки");
     nav.innerHTML = `
       <a href="/admin/cars.html" data-admin-mobile-nav>
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 16l1.4-5.2A2 2 0 0 1 8.3 9.3h7.4a2 2 0 0 1 1.9 1.5L19 16m-14 0h14m-14 0v2.2c0 .4.4.8.8.8h.7c.4 0 .8-.4.8-.8V17m9.4 0v1.2c0 .4.4.8.8.8h.7c.4 0 .8-.4.8-.8V16M8 14h.01M16 14h.01"/></svg>
@@ -156,25 +157,39 @@ const Admin = (() => {
   }
 
   function bindLogout() {
-    const logoutButtons = document.querySelectorAll('[data-admin-logout]');
+    const logoutButtons = document.querySelectorAll("[data-admin-logout]");
 
     logoutButtons.forEach((button) => {
-      button.addEventListener('click', async () => {
+      button.addEventListener("click", async () => {
         try {
           button.disabled = true;
-          button.textContent = 'Выходим...';
+          button.textContent = "Выходим...";
 
-          await request('/api/admin/logout', {
-            method: 'POST',
+          const registration =
+            "serviceWorker" in navigator
+              ? await navigator.serviceWorker.getRegistration("/admin/")
+              : null;
+          const ownWorker =
+            registration &&
+            new URL(registration.active?.scriptURL || location.href)
+              .pathname === "/push-sw.js";
+          const subscription = ownWorker
+            ? await registration.pushManager.getSubscription()
+            : null;
+          const result = await request("/api/admin/logout", {
+            method: "POST",
+            body: subscription ? { endpoint: subscription.endpoint } : {},
           });
+          if (!result) return;
+          if (subscription) await subscription.unsubscribe().catch(() => false);
 
-          redirectToLogin();
+          window.location.href = "/admin/login.html";
         } catch (error) {
-          console.error('Logout error:', error);
-          alert('Не удалось выйти из админки');
+          console.error("Logout error:", error);
+          alert("Не удалось выйти из админки");
         } finally {
           button.disabled = false;
-          button.textContent = 'Выйти';
+          button.textContent = "Выйти";
         }
       });
     });
@@ -182,12 +197,14 @@ const Admin = (() => {
 
   async function init() {
     try {
-      await checkAuth();
+      const auth = await checkAuth();
+      if (!auth?.success) return;
       createMobileNav();
       setActiveNav();
       bindLogout();
+      document.dispatchEvent(new Event("admin:ready"));
     } catch (error) {
-      console.error('Admin init error:', error);
+      console.error("Admin init error:", error);
     }
   }
 
@@ -199,4 +216,4 @@ const Admin = (() => {
   };
 })();
 
-document.addEventListener('DOMContentLoaded', Admin.init);
+document.addEventListener("DOMContentLoaded", Admin.init);

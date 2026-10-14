@@ -65,9 +65,7 @@
             </table>
           </div>
 
-          <p class="admin-empty" id="leadsEmpty" hidden>
-            Заявок пока нет.
-          </p>
+          <p class="admin-empty" id="leadsEmpty" hidden>Заявок пока нет.</p>
         </section>
 
         <section class="push-settings" aria-labelledby="pushSettingsTitle">
@@ -81,11 +79,16 @@
               <h2 id="pushSettingsTitle">Уведомления о новых заявках</h2>
               <p>
                 Включите уведомления на этом устройстве. Когда клиент оставит
-                новую заявку, браузер сразу покажет push даже если админка
-                открыта в другой вкладке.
+                новую заявку, браузер сможет показать уведомление, даже если
+                вкладка админки закрыта.
               </p>
 
-              <div class="push-settings__status" data-push-status>
+              <div
+                class="push-settings__status"
+                data-push-status
+                role="status"
+                aria-live="polite"
+              >
                 <span class="push-settings__status-dot"></span>
                 <strong>Проверяем состояние...</strong>
               </div>
@@ -97,6 +100,7 @@
               class="push-settings__button push-settings__button--primary"
               type="button"
               data-push-enable
+              disabled
             >
               Включить уведомления
             </button>
@@ -105,6 +109,7 @@
               class="push-settings__button"
               type="button"
               data-push-test
+              disabled
             >
               Тестовый Push
             </button>
@@ -113,17 +118,25 @@
               class="push-settings__button push-settings__button--danger"
               type="button"
               data-push-disable
+              disabled
             >
               Отключить
             </button>
           </div>
 
-          <p class="push-settings__message" data-push-message hidden></p>
+          <p
+            class="push-settings__message"
+            data-push-message
+            role="status"
+            aria-live="polite"
+            hidden
+          ></p>
         </section>
       </main>
     </div>
 
     <script src="/admin/js/admin.js"></script>
     <script src="/admin/js/leads.js"></script>
+    <script src="/admin/js/push.js"></script>
   </body>
 </html>

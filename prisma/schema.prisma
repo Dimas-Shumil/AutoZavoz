@@ -90,6 +90,7 @@ model CarImage {
 }
 
 model Lead {
+  pushDeliveryJobs PushDeliveryJob[]
   id Int @id @default(autoincrement())
 
   leadType String @default("general")
@@ -137,6 +138,7 @@ model AdminUser {
 }
 
 model PushSubscription {
+  deliveryJobs PushDeliveryJob[]
   id Int @id @default(autoincrement())
 
   adminId Int
@@ -159,4 +161,24 @@ model Session {
   sid       String   @unique
   data      String
   expiresAt DateTime
+}
+
+
+model PushDeliveryJob {
+  id Int @id @default(autoincrement())
+  leadId Int
+  lead Lead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  subscriptionId Int
+  subscription PushSubscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  status String @default("pending")
+  attempts Int @default(0)
+  nextAttemptAt DateTime @default(now())
+  lockedAt DateTime?
+  leaseToken String?
+  deliveredAt DateTime?
+  lastErrorCode String?
+  createdAt DateTime @default(now())
+  @@unique([leadId, subscriptionId])
+  @@index([status, nextAttemptAt])
+  @@index([subscriptionId])
 }

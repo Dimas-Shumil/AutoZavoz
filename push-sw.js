@@ -1,49 +1,26 @@
 self.addEventListener('push', (event) => {
-  let data = {};
-
+  let payload = {};
+  try { payload = event.data?.json() || {}; } catch {}
+  let target = '/admin/leads.html';
   try {
-    data = event.data ? event.data.json() : {};
-  } catch {
-    data = {};
-  }
-
-  event.waitUntil(
-    self.registration.showNotification(data.title || 'АвтоZавоз', {
-      body: data.body || 'Новая заявка',
-      icon: '/site/img/logoIcon.png',
-      badge: '/site/img/logoIcon.png',
-      requireInteraction: true,
-      renotify: true,
-      tag: data.tag || 'avtozavoz-lead',
-      data: {
-        url: data.url || '/admin/leads.html',
-      },
-    }),
-  );
+    const url = new URL(payload.url, self.location.origin);
+    if (url.origin === self.location.origin && url.pathname === '/admin/leads.html') target = url.pathname + url.search;
+  } catch {}
+  event.waitUntil(self.registration.showNotification(payload.title || 'АвтоZавоз', {
+    body: payload.body || 'Новая заявка', icon: '/site/img/logoIcon.png', badge: '/site/img/logoIcon.png',
+    tag: payload.tag || 'avtozavoz-lead', renotify: true, data: { url: target },
+  }));
 });
-
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
-
-  const targetUrl = event.notification.data?.url || '/admin/leads.html';
-
-  event.waitUntil(
-    clients
-      .matchAll({
-        type: 'window',
-        includeUncontrolled: true,
-      })
-      .then(async (windows) => {
-        const existing = windows.find((client) =>
-          client.url.includes('/admin/'),
-        );
-
-        if (existing) {
-          await existing.navigate(targetUrl);
-          return existing.focus();
-        }
-
-        return clients.openWindow(targetUrl);
-      }),
-  );
+  const url = new URL(event.notification.data?.url || '/admin/leads.html', self.location.origin);
+  if (url.origin !== self.location.origin || url.pathname !== '/admin/leads.html') return;
+  event.waitUntil((async () => {
+    const windows = await clients.matchAll({ type: 'window', includeUncontrolled: true });
+    const existing = windows.find((client) => {
+      const current = new URL(client.url); return current.origin === self.location.origin && current.pathname.startsWith('/admin/');
+    });
+    if (existing) { await existing.navigate(url.href); return existing.focus(); }
+    return clients.openWindow(url.href);
+  })());
 });

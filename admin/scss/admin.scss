@@ -30,8 +30,16 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(circle at top right, rgba(255, 106, 0, 0.14), transparent 34%),
-    radial-gradient(circle at bottom left, rgba(255, 106, 0, 0.08), transparent 36%),
+    radial-gradient(
+      circle at top right,
+      rgba(255, 106, 0, 0.14),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at bottom left,
+      rgba(255, 106, 0, 0.08),
+      transparent 36%
+    ),
     $black-main;
   color: $white-main;
   font-family: Arial, sans-serif;
@@ -88,10 +96,10 @@ img {
         rgba(0, 0, 0, 0.06) 42%,
         rgba(0, 0, 0, 0.72) 100%
       ),
-      url('/site/img//login.webp') center center / cover no-repeat;
+      url("/site/img//login.webp") center center / cover no-repeat;
 
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       inset: 0;
       pointer-events: none;
@@ -101,11 +109,7 @@ img {
           rgba(255, 106, 0, 0.13),
           transparent 36%
         ),
-        linear-gradient(
-          90deg,
-          rgba(0, 0, 0, 0.12),
-          transparent 55%
-        );
+        linear-gradient(90deg, rgba(0, 0, 0, 0.12), transparent 55%);
     }
   }
 
@@ -258,11 +262,7 @@ img {
     margin-top: 3px;
     border: 0;
     border-radius: 13px;
-    background: linear-gradient(
-      180deg,
-      $orange-light 0%,
-      $orange-main 100%
-    );
+    background: linear-gradient(180deg, $orange-light 0%, $orange-main 100%);
     color: #ffffff;
     font-size: 14px;
     font-weight: 900;
@@ -565,7 +565,11 @@ img {
   border: 1px solid $border-main;
   border-radius: 22px;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02)),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.055),
+      rgba(255, 255, 255, 0.02)
+    ),
     $black-card;
   box-shadow: 0 28px 80px rgba(0, 0, 0, 0.34);
 
@@ -936,7 +940,6 @@ img {
 }
 
 @media (max-width: 560px) {
-
   .admin-sidebar__nav {
     grid-template-columns: 1fr;
   }
@@ -1122,9 +1125,9 @@ img {
 }
 
 .admin-field__error {
-  color: #ff9696 !important;
-  font-size: 13px !important;
-  font-weight: 700 !important;
+  color: #ff9696;
+  font-size: 13px;
+  font-weight: 700;
   line-height: 1.45;
 }
 
@@ -1181,7 +1184,6 @@ img {
   }
 }
 
-
 // Leads / Web Push light workspace
 $leads-bg: #f4f2ed;
 $leads-surface: #ffffff;
@@ -1201,7 +1203,11 @@ $leads-shadow: 0 24px 70px rgba(45, 37, 31, 0.09);
 
   .admin-main {
     background:
-      radial-gradient(circle at 92% 4%, rgba(255, 106, 0, 0.1), transparent 28%),
+      radial-gradient(
+        circle at 92% 4%,
+        rgba(255, 106, 0, 0.1),
+        transparent 28%
+      ),
       $leads-bg;
   }
 
@@ -1327,7 +1333,7 @@ $leads-shadow: 0 24px 70px rgba(45, 37, 31, 0.09);
     box-shadow: inset 0 0 0 1px rgba(255, 106, 0, 0.12);
 
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       top: 13px;
       left: 17px;
@@ -1339,7 +1345,7 @@ $leads-shadow: 0 24px 70px rgba(45, 37, 31, 0.09);
     }
 
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       left: 21px;
       bottom: 12px;
@@ -1380,10 +1386,10 @@ $leads-shadow: 0 24px 70px rgba(45, 37, 31, 0.09);
     }
   }
 
-  &__eyebrow {
-    margin: 0 0 6px !important;
-    color: $leads-orange-dark !important;
-    font-size: 11px !important;
+  &__copy > p#{&}__eyebrow {
+    margin: 0 0 6px;
+    color: $leads-orange-dark;
+    font-size: 11px;
     font-weight: 900;
     letter-spacing: 0.14em;
     text-transform: uppercase;
@@ -1796,8 +1802,8 @@ $leads-shadow: 0 24px 70px rgba(45, 37, 31, 0.09);
     transform: scale(0.97);
   }
 
-  .admin-mobile-nav__logout {
-    color: #d8aaa5 !important;
+  .admin-mobile-nav .admin-mobile-nav__logout {
+    color: #d8aaa5;
   }
 }
 
@@ -1824,3 +1830,41 @@ $leads-shadow: 0 24px 70px rgba(45, 37, 31, 0.09);
     font-size: 9px;
   }
 }
+
+.admin-body--leads .admin-table .admin-lead--highlight {
+  outline: 2px solid $leads-orange;
+  outline-offset: -2px;
+  background: $leads-surface-soft;
+  scroll-margin-bottom: 110px;
+}
+.push-settings__status {
+  max-width: 100%;
+  border-radius: 14px;
+}
+.push-settings__status strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.push-settings__status-dot {
+  flex-shrink: 0;
+}
+.admin-body--leads .admin-table td {
+  overflow-wrap: anywhere;
+}
+.push-settings__button:focus-visible {
+  outline: 3px solid $leads-orange-dark;
+  outline-offset: 3px;
+}
+.push-settings__message[hidden] {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .push-settings__button,
+  .admin-mobile-nav a,
+  .admin-mobile-nav button {
+    transition: none;
+  }
+}
+.admin-body--leads .admin-sidebar { color: $white-main; }
+.admin-body--leads .admin-table .admin-action { white-space: nowrap; }
+.push-settings__actions { align-self: center; align-content: center; }
