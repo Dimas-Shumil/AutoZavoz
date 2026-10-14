@@ -130,8 +130,28 @@ model AdminUser {
 
   isActive Boolean @default(true)
 
+  pushSubscriptions PushSubscription[]
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model PushSubscription {
+  id Int @id @default(autoincrement())
+
+  adminId Int
+  admin   AdminUser @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
+  endpoint String @unique
+  p256dh   String
+  auth     String
+
+  userAgent String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([adminId])
 }
 
 model Session {

@@ -108,15 +108,51 @@ const Admin = (() => {
 
   function setActiveNav() {
     const currentPath = window.location.pathname;
-    const links = document.querySelectorAll('[data-admin-nav]');
+    const links = document.querySelectorAll(
+      '[data-admin-nav], [data-admin-mobile-nav]',
+    );
 
     links.forEach((link) => {
       const href = link.getAttribute('href');
+      const isCarList =
+        href === '/admin/cars.html' &&
+        (currentPath === '/admin/cars.html' ||
+          (currentPath === '/admin/car-edit.html' &&
+            !link.matches('[data-admin-mobile-nav]')));
 
-      if (href === currentPath) {
+      if (href === currentPath || isCarList) {
         link.classList.add('active');
       }
     });
+  }
+
+
+  function createMobileNav() {
+    if (document.querySelector('.admin-mobile-nav')) return;
+
+    const nav = document.createElement('nav');
+    nav.className = 'admin-mobile-nav';
+    nav.setAttribute('aria-label', 'Навигация админки');
+    nav.innerHTML = `
+      <a href="/admin/cars.html" data-admin-mobile-nav>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 16l1.4-5.2A2 2 0 0 1 8.3 9.3h7.4a2 2 0 0 1 1.9 1.5L19 16m-14 0h14m-14 0v2.2c0 .4.4.8.8.8h.7c.4 0 .8-.4.8-.8V17m9.4 0v1.2c0 .4.4.8.8.8h.7c.4 0 .8-.4.8-.8V16M8 14h.01M16 14h.01"/></svg>
+        <span>Авто</span>
+      </a>
+      <a href="/admin/leads.html" data-admin-mobile-nav>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h10a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Zm2 4h6M9 13h4M9 17h2"/></svg>
+        <span>Заявки</span>
+      </a>
+      <a href="/admin/car-edit.html" data-admin-mobile-nav>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        <span>Добавить</span>
+      </a>
+      <button type="button" data-admin-logout class="admin-mobile-nav__logout">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 5H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h4m4-4 4-3-4-3m4 3H9"/></svg>
+        <span>Выйти</span>
+      </button>
+    `;
+
+    document.body.append(nav);
   }
 
   function bindLogout() {
@@ -147,6 +183,7 @@ const Admin = (() => {
   async function init() {
     try {
       await checkAuth();
+      createMobileNav();
       setActiveNav();
       bindLogout();
     } catch (error) {

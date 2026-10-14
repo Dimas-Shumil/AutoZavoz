@@ -15,6 +15,8 @@ const prisma = require('./src/db');
 const publicCarsRoutes = require('./src/routes/cars.public.routes');
 const adminCarsRoutes = require('./src/routes/cars.admin.routes');
 const leadsRoutes = require('./src/routes/leads.routes');
+const pushRoutes = require('./src/routes/push.routes');
+const { notifyAboutNewLead } = require('./src/services/push.service');
 const app = express();
 const PORT = Number(process.env.PORT) || 3000;
 const MIN_FORM_TIME_MS = 2000;
@@ -152,7 +154,7 @@ app.use(
 
     credentials: true,
 
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
 
     allowedHeaders: ['Content-Type', 'Authorization'],
   }),
@@ -174,6 +176,7 @@ app.use('/api', publicCarsRoutes);
 app.use('/api', adminAuthRoutes);
 app.use('/api', adminCarsRoutes);
 app.use('/api', leadsRoutes);
+app.use('/api', pushRoutes);
 
 const adminPagesPath = path.join(__dirname, 'admin-pages');
 
@@ -224,6 +227,12 @@ app.get('/admin/leads.html', requireAdminPage, (req, res) => {
 app.use('/site', express.static(path.join(__dirname, 'site')));
 app.use('/admin', express.static(path.join(__dirname, 'admin')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+app.get('/push-sw.js', (req, res) => {
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Service-Worker-Allowed', '/');
+  res.sendFile(path.join(__dirname, 'push-sw.js'));
+});
 
 app.get('/catalog.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'catalog.html'));
@@ -383,7 +392,7 @@ app.post('/api/send', checkOrigin, sendLimiter, async (req, res) => {
       timeZone: 'Asia/Krasnoyarsk',
     });
 
-    await prisma.lead.create({
+    const lead = await prisma.lead.create({
       data: {
         leadType: 'general',
         source: 'main_form',
@@ -408,6 +417,8 @@ app.post('/api/send', checkOrigin, sendLimiter, async (req, res) => {
         status: 'new',
       },
     });
+
+    void notifyAboutNewLead(lead);
 
     const text = `
 Новая заявка с сайта АвтоZавоз

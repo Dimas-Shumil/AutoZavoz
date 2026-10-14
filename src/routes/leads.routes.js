@@ -1,6 +1,7 @@
 const express = require('express');
 const prisma = require('../db');
 const requireAdminAuth = require('../middleware/requireAdminAuth');
+const { notifyAboutNewLead } = require('../services/push.service');
 
 const router = express.Router();
 
@@ -63,6 +64,8 @@ router.post('/leads', async (req, res) => {
         status: 'new',
       },
     });
+
+    void notifyAboutNewLead(lead);
 
     return res.status(201).json({
       success: true,

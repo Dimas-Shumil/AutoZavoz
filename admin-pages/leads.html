@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/site/css/admin.min.css" />
   </head>
 
-  <body class="admin-body" data-admin-page="leads">
+  <body class="admin-body admin-body--leads" data-admin-page="leads">
     <div class="admin-shell">
       <aside class="admin-sidebar">
         <div class="admin-sidebar__brand">
@@ -68,6 +68,57 @@
           <p class="admin-empty" id="leadsEmpty" hidden>
             Заявок пока нет.
           </p>
+        </section>
+
+        <section class="push-settings" aria-labelledby="pushSettingsTitle">
+          <div class="push-settings__content">
+            <div class="push-settings__icon" aria-hidden="true">
+              <span></span>
+            </div>
+
+            <div class="push-settings__copy">
+              <p class="push-settings__eyebrow">Web Push</p>
+              <h2 id="pushSettingsTitle">Уведомления о новых заявках</h2>
+              <p>
+                Включите уведомления на этом устройстве. Когда клиент оставит
+                новую заявку, браузер сразу покажет push даже если админка
+                открыта в другой вкладке.
+              </p>
+
+              <div class="push-settings__status" data-push-status>
+                <span class="push-settings__status-dot"></span>
+                <strong>Проверяем состояние...</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="push-settings__actions">
+            <button
+              class="push-settings__button push-settings__button--primary"
+              type="button"
+              data-push-enable
+            >
+              Включить уведомления
+            </button>
+
+            <button
+              class="push-settings__button"
+              type="button"
+              data-push-test
+            >
+              Тестовый Push
+            </button>
+
+            <button
+              class="push-settings__button push-settings__button--danger"
+              type="button"
+              data-push-disable
+            >
+              Отключить
+            </button>
+          </div>
+
+          <p class="push-settings__message" data-push-message hidden></p>
         </section>
       </main>
     </div>

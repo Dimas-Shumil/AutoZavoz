@@ -67,3 +67,6 @@ check-admin.js
 
 # mac
 .AppleDouble
+
+# localhost web push keys
+.local-vapid.json
